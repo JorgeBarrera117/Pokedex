@@ -1,0 +1,174 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+    <title>Pokédex Pro | Generación 1-9</title>
+    ...
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- CSS propio -->
+    <link rel="stylesheet" href="./css/main.css">
+
+</head>
+<body>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header class="pokedex-header">
+        <div class="header-inner container-fluid">
+
+            <!-- Logo / Marca -->
+            <div class="pokedex-brand">
+                <!-- Ícono Pokébola de la CDN de sprites -->
+                <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+                    alt="Pokébola"
+                    class="brand-icon"
+                    style="image-rendering: pixelated; width:48px; height:48px;"
+                >
+                <div>
+                    <div class="brand-title">
+                        POKÉDEX
+                        <span class="brand-subtitle">GEN I – IX &nbsp;·&nbsp; 1025 POKÉMON</span>
+                    </div>
+                </div>
+                <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png"
+                    alt="Master Ball"
+                    class="brand-icon"
+                    style="image-rendering: pixelated; width:48px; height:48px;"
+                >
+            </div>
+
+            <!-- Buscador -->
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input
+                    type="text"
+                    id="buscador"
+                    placeholder="Busca por nombre o número  (ej: 25 o Pikachu)..."
+                    autocomplete="off"
+                >
+            </div>
+
+            <!-- Filtros de tipo -->
+            <div class="filters-strip" id="filtros">
+                <button class="btn-type active" id="ver-todos">
+                    <i class="fa-solid fa-border-all" style="font-size:0.75rem;"></i> TODOS
+                </button>
+                <button class="btn-type normal"   id="normal">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/normal.svg"   class="type-icon"> NORMAL
+                </button>
+                <button class="btn-type fire"     id="fire">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/fire.svg"     class="type-icon"> FUEGO
+                </button>
+                <button class="btn-type water"    id="water">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/water.svg"    class="type-icon"> AGUA
+                </button>
+                <button class="btn-type grass"    id="grass">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/grass.svg"    class="type-icon"> PLANTA
+                </button>
+                <button class="btn-type electric" id="electric">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/electric.svg" class="type-icon"> ELÉCTRICO
+                </button>
+                <button class="btn-type ice"      id="ice">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/ice.svg"      class="type-icon"> HIELO
+                </button>
+                <button class="btn-type fighting" id="fighting">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/fighting.svg" class="type-icon"> LUCHA
+                </button>
+                <button class="btn-type poison"   id="poison">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/poison.svg"   class="type-icon"> VENENO
+                </button>
+                <button class="btn-type ground"   id="ground">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/ground.svg"   class="type-icon"> TIERRA
+                </button>
+                <button class="btn-type flying"   id="flying">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/flying.svg"   class="type-icon"> VOLADOR
+                </button>
+                <button class="btn-type psychic"  id="psychic">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/psychic.svg"  class="type-icon"> PSÍQUICO
+                </button>
+                <button class="btn-type bug"      id="bug">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/bug.svg"      class="type-icon"> BICHO
+                </button>
+                <button class="btn-type rock"     id="rock">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/rock.svg"     class="type-icon"> ROCA
+                </button>
+                <button class="btn-type ghost"    id="ghost">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/ghost.svg"    class="type-icon"> FANTASMA
+                </button>
+                <button class="btn-type dark"     id="dark">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/dark.svg"     class="type-icon"> SINIESTRO
+                </button>
+                <button class="btn-type dragon"   id="dragon">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/dragon.svg"   class="type-icon"> DRAGÓN
+                </button>
+                <button class="btn-type steel"    id="steel">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/steel.svg"    class="type-icon"> ACERO
+                </button>
+                <button class="btn-type fairy"    id="fairy">
+                    <img src="https://cdn.jsdelivr.net/gh/duiker101/pokemon-type-svg-icons@master/icons/fairy.svg"    class="type-icon"> HADA
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ═══════════════ MAIN ═══════════════ -->
+    <main class="container">
+
+        <!-- Barra de resultados -->
+        <div class="results-bar">
+            <span class="results-count" id="resultCount">Cargando...</span>
+            <span class="results-count">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+                     style="width:16px; image-rendering:pixelated; opacity:0.4; vertical-align:middle; margin-right:4px;">
+                POKÉDEX PRO
+            </span>
+        </div>
+
+        <div class="row g-3" id="listaPokemon"></div>
+
+        <div id="loader" class="text-center">
+            <div class="spinner-border text-danger" role="status"></div>
+            <p>Cargando Pokédex...</p>
+        </div>
+    </main>
+
+    <!-- ═══════════════ MODAL ═══════════════ -->
+    <div class="modal fade" id="pokeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+                <div id="modal-body-content">
+                    <!-- El JS inyecta aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+
+    <!-- Actualizar contador de resultados -->
+    <script>
+        const origRenderList = window.renderList;
+        // Patch para actualizar el contador tras cada render
+        const _patchCounter = () => {
+            const countEl = document.getElementById('resultCount');
+            const observer = new MutationObserver(() => {
+                const cards = document.querySelectorAll('#listaPokemon .pokemon-card');
+                if (countEl) countEl.textContent = cards.length + ' POKÉMON';
+            });
+            const target = document.getElementById('listaPokemon');
+            if (target) observer.observe(target, { childList: true });
+        };
+        document.addEventListener('DOMContentLoaded', _patchCounter);
+    </script>
+</body>
+</html>
