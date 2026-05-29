@@ -1,24 +1,55 @@
+/* ══════════════════════════════════════
+        VARIABLES Y COLORES
+        ══════════════════════════════════════ */
+        :root {
+            --clr-pokedex: #dc0a2d;
+            --clr-bg: #0f0f1a;
+            --clr-card: #1e1e30;
+            --clr-card-dark: #161624;
 
-        /* ── RESET & BASE ── */
+            /* Tipos */
+            --type-normal:   #A8A77A;
+            --type-fire:     #EE8130;
+            --type-water:    #6390F0;
+            --type-electric: #F7D02C;
+            --type-grass:    #7AC74C;
+            --type-ice:      #96D9D6;
+            --type-fighting: #C22E28;
+            --type-poison:   #A33EA1;
+            --type-ground:   #E2BF65;
+            --type-flying:   #A98FF3;
+            --type-psychic:  #F95587;
+            --type-bug:      #A6B91A;
+            --type-rock:     #B6A136;
+            --type-ghost:    #735797;
+            --type-dragon:   #6F35FC;
+            --type-dark:     #705746;
+            --type-steel:    #B7B7CE;
+            --type-fairy:    #D685AD;
+        }
+
+        /* ══════════════════════════════════════
+        BASE
+        ══════════════════════════════════════ */
         *, *::before, *::after { box-sizing: border-box; }
 
         body {
-            background: #0f0f1a;
+            background: var(--clr-bg);
             font-family: 'Poppins', sans-serif;
             color: #e0e0e0;
             min-height: 100vh;
         }
 
-        /* ── HEADER ── */
+        /* ══════════════════════════════════════
+        HEADER
+        ══════════════════════════════════════ */
         .pokedex-header {
             background: linear-gradient(160deg, #c0001e 0%, #dc0a2d 45%, #9b0018 100%);
-            border-bottom: none;
             padding: 0;
             position: relative;
             overflow: hidden;
         }
 
-        /* Patrón de pokéballs de fondo */
         .pokedex-header::before {
             content: '';
             position: absolute;
@@ -35,21 +66,22 @@
         .header-inner {
             position: relative;
             z-index: 2;
-            padding: 36px 24px 28px;
+            padding: 32px 24px 24px;
         }
 
-        /* ── LOGO / TÍTULO ── */
+        /* ── MARCA ── */
         .pokedex-brand {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
         .brand-icon {
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
+            image-rendering: pixelated;
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
         }
 
@@ -63,22 +95,22 @@
         }
 
         .brand-subtitle {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: rgba(255,255,255,0.55);
             font-family: 'Press Start 2P', cursive;
             letter-spacing: 3px;
             display: block;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         /* ── BUSCADOR ── */
         .search-wrapper {
             max-width: 560px;
-            margin: 0 auto 24px;
+            margin: 0 auto 20px;
             position: relative;
         }
 
-        .search-wrapper .search-icon {
+        .search-icon {
             position: absolute;
             left: 18px;
             top: 50%;
@@ -96,11 +128,12 @@
             padding: 13px 20px 13px 46px;
             font-size: 0.9rem;
             font-weight: 500;
+            font-family: 'Poppins', sans-serif;
             background: rgba(255,255,255,0.95);
             color: #222;
             outline: none;
             transition: all 0.25s;
-            box-shadow: 0 6px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.25);
         }
 
         #buscador:focus {
@@ -111,13 +144,14 @@
 
         #buscador::placeholder { color: rgba(0,0,0,0.38); }
 
-        /* ── FILTROS ── */
+        /* ── FILTROS DE TIPO ── */
         .filters-strip {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 7px;
             padding: 4px 0 2px;
+            margin-bottom: 14px;
         }
 
         .btn-type {
@@ -147,16 +181,14 @@
             background: rgba(255,255,255,0.22);
         }
 
-        .btn-type:active {
-            transform: translateY(0) scale(0.98);
-        }
+        .btn-type:active  { transform: translateY(0) scale(0.98); }
 
         .btn-type.active {
             border-color: #fff;
             box-shadow: 0 0 0 3px rgba(255,255,255,0.3), 0 6px 18px rgba(0,0,0,0.3);
         }
 
-        /* Colores con fondo semisólido cuando activo */
+        /* Colores por tipo */
         .btn-type.normal   { background: rgba(168,167,122,0.35); }
         .btn-type.fire     { background: rgba(238,129,48,0.4); }
         .btn-type.water    { background: rgba(99,144,240,0.4); }
@@ -177,6 +209,26 @@
         .btn-type.fairy    { background: rgba(214,133,173,0.4); }
         #ver-todos         { background: rgba(30,30,30,0.55); }
 
+        /* Colores sólidos para badges del modal */
+        .normal   { background-color: var(--type-normal)   !important; color: #fff; }
+        .fire     { background-color: var(--type-fire)     !important; color: #fff; }
+        .water    { background-color: var(--type-water)    !important; color: #fff; }
+        .electric { background-color: var(--type-electric) !important; color: #fff; }
+        .grass    { background-color: var(--type-grass)    !important; color: #fff; }
+        .ice      { background-color: var(--type-ice)      !important; color: #fff; }
+        .fighting { background-color: var(--type-fighting) !important; color: #fff; }
+        .poison   { background-color: var(--type-poison)   !important; color: #fff; }
+        .ground   { background-color: var(--type-ground)   !important; color: #fff; }
+        .flying   { background-color: var(--type-flying)   !important; color: #fff; }
+        .psychic  { background-color: var(--type-psychic)  !important; color: #fff; }
+        .bug      { background-color: var(--type-bug)      !important; color: #fff; }
+        .rock     { background-color: var(--type-rock)     !important; color: #fff; }
+        .ghost    { background-color: var(--type-ghost)    !important; color: #fff; }
+        .dragon   { background-color: var(--type-dragon)   !important; color: #fff; }
+        .dark     { background-color: var(--type-dark)     !important; color: #fff; }
+        .steel    { background-color: var(--type-steel)    !important; color: #fff; }
+        .fairy    { background-color: var(--type-fairy)    !important; color: #fff; }
+
         .type-icon {
             width: 15px;
             height: 15px;
@@ -184,13 +236,79 @@
             flex-shrink: 0;
         }
 
-        /* ── MAIN ── */
+        /* ── SELECTOR DE ORDENAMIENTO ── */
+        .sort-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .sort-select-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .sort-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            image-rendering: pixelated;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.6;
+        }
+
+        .sort-chevron {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.35);
+            font-size: 0.7rem;
+            pointer-events: none;
+        }
+
+        #ordenar {
+            background: #1e1e30;
+            color: #e0e0e0;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 30px;
+            padding: 9px 42px 9px 38px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            min-width: 190px;
+            transition: all 0.22s ease;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+
+        #ordenar:hover,
+        #ordenar:focus {
+            border-color: rgba(220,10,45,0.5);
+            box-shadow: 0 0 0 3px rgba(220,10,45,0.15), 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        #ordenar option {
+            background: #1a1a2e;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* ══════════════════════════════════════
+        MAIN / RESULTADOS
+        ══════════════════════════════════════ */
         main.container {
             padding-top: 36px;
             padding-bottom: 60px;
         }
 
-        /* Contador de resultados */
         .results-bar {
             display: flex;
             align-items: center;
@@ -206,9 +324,11 @@
             letter-spacing: 1px;
         }
 
-        /* ── TARJETAS ── */
+        /* ══════════════════════════════════════
+        TARJETAS
+        ══════════════════════════════════════ */
         .pokemon-card {
-            background: linear-gradient(145deg, #1e1e30, #161624);
+            background: linear-gradient(145deg, var(--clr-card), var(--clr-card-dark));
             border-radius: 20px;
             padding: 22px 16px 18px;
             cursor: pointer;
@@ -237,6 +357,10 @@
             box-shadow: 0 16px 40px rgba(220,10,45,0.15), 0 4px 12px rgba(0,0,0,0.4);
         }
 
+        .pokemon-card:hover .card-img {
+            transform: translateY(-4px) scale(1.05);
+        }
+
         .id-back {
             position: absolute;
             right: 10px;
@@ -257,10 +381,6 @@
             transition: transform 0.3s;
             display: block;
             margin: 0 auto;
-        }
-
-        .pokemon-card:hover .card-img {
-            transform: translateY(-4px) scale(1.05);
         }
 
         .poke-name {
@@ -286,7 +406,9 @@
             letter-spacing: 1px;
         }
 
-        /* ── LOADER ── */
+        /* ══════════════════════════════════════
+        LOADER
+        ══════════════════════════════════════ */
         #loader {
             color: rgba(255,255,255,0.5);
             padding: 60px 0;
@@ -306,14 +428,15 @@
             height: 3rem;
         }
 
-        /* ── MODAL ── */
+        /* ══════════════════════════════════════
+        MODAL BASE
+        ══════════════════════════════════════ */
         .modal-content {
             background: transparent;
             border: none;
             max-height: 90vh;
         }
 
-        /* El div que Bootstrap hace scrolleable */
         .modal-dialog-scrollable .modal-content {
             overflow: hidden;
         }
@@ -322,34 +445,333 @@
             overflow-y: auto;
             max-height: 85vh;
             border-radius: 20px;
-
-            /* Scrollbar elegante */
             scrollbar-width: thin;
             scrollbar-color: rgba(220,10,45,0.6) rgba(255,255,255,0.06);
         }
 
-        #modal-body-content::-webkit-scrollbar {
-            width: 6px;
+        #modal-body-content::-webkit-scrollbar { width: 6px; }
+        #modal-body-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 10px; }
+        #modal-body-content::-webkit-scrollbar-thumb { background: rgba(220,10,45,0.6); border-radius: 10px; }
+        #modal-body-content::-webkit-scrollbar-thumb:hover { background: rgba(220,10,45,0.9); }
+
+        /* ── ESTILOS DEL MODAL DETALLE (Limpiados de JS) ── */
+        .modal-card-container {
+            font-family: 'Poppins', sans-serif;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid #333;
         }
 
-        #modal-body-content::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.04);
+        .modal-header-section {
+            padding: 30px 30px 20px;
+            position: relative;
+        }
+
+        .modal-id-badge {
+            background: rgba(0, 0, 0, 0.35);
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.65rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        .modal-img-container {
+            width: 190px;
+            height: 190px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-main-img {
+            width: 170px;
+            height: 170px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+        }
+
+        .modal-poke-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.05rem;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            line-height: 1.5;
+        }
+
+        .modal-type-badge {
+            font-size: 0.78rem;
+            padding: 9px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .modal-type-icon {
+            width: 17px;
+            filter: brightness(0) invert(1);
+        }
+
+        .modal-info-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .modal-info-label {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .modal-info-value {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .modal-desc-box {
+            margin-top: 18px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 14px 18px;
+        }
+
+        .modal-desc-text {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.88rem;
+            margin: 0;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .modal-body-section {
+            background: #1a1a2e;
+            padding: 28px;
+        }
+
+        .modal-section-title {
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .modal-total-stats {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .stat-label {
+            width: 72px;
+            text-align: right;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+
+        .stat-bar-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            height: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-bar {
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .stat-val {
+            width: 38px;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .weakness-badge {
+            font-size: 0.75rem;
+            padding: 9px 16px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .weakness-icon {
+            width: 15px;
+            filter: brightness(0) invert(1);
+        }
+
+        .weakness-multiplier {
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 10px;
+            padding: 1px 7px;
+            font-size: 0.68rem;
         }
 
-        #modal-body-content::-webkit-scrollbar-thumb {
-            background: rgba(220,10,45,0.6);
-            border-radius: 10px;
+        .evo-container {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        #modal-body-content::-webkit-scrollbar-thumb:hover {
-            background: rgba(220,10,45,0.9);
+        .evo-item {
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.2s;
         }
 
-        /* ── RESPONSIVE ── */
+        .evo-item:hover {
+            transform: scale(1.08);
+        }
+
+        .evo-img-container {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+
+        .evo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .evo-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.48rem;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .form-card {
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+            flex: 1;
+            min-width: 140px;
+            max-width: 180px;
+        }
+
+        .form-card:hover {
+            transform: scale(1.05);
+        }
+
+        .form-item-icon {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            padding: 5px;
+            z-index: 5;
+        }
+
+        .form-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+        }
+
+        .form-name {
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.45rem;
+            margin: 10px 0 0;
+            text-transform: uppercase;
+        }
+
+        .regional-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .shiny-box {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b69);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.08);
+        }
+
+        .shiny-img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 24px rgba(255, 215, 0, 0.55));
+        }
+
+        /* ══════════════════════════════════════
+        RESPONSIVE
+        ══════════════════════════════════════ */
         @media (max-width: 600px) {
-            .brand-title { font-size: 0.75rem; }
-            .brand-icon { width: 40px; height: 40px; }
-            .btn-type { font-size: 0.55rem; padding: 6px 11px; }
-            .card-img { width: 110px; height: 110px; }
+            .brand-title  { font-size: 0.75rem; }
+            .brand-icon   { width: 38px; height: 38px; }
+            .btn-type     { font-size: 0.55rem; padding: 6px 11px; }
+            .card-img     { width: 110px; height: 110px; }
+            #ordenar      { min-width: 160px; font-size: 0.65rem; }
+            
+            /* Ajustes Modal Mobile */
+            .modal-img-container { width: 140px; height: 140px; }
+            .modal-main-img { width: 120px; height: 120px; }
+            .modal-info-box { padding: 8px 12px; }
+            .modal-info-value { font-size: 0.9rem; }
+            .stat-label { width: 50px; font-size: 0.6rem; }
         }
