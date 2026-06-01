@@ -1,0 +1,23 @@
+.chartContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.dataPolygon {
+  transition: all 0.5s ease-out;
+  transform-origin: center;
+  animation: growIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes growIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,108 @@
+.sidebar {
+  width: 260px;
+  background-color: rgba(26, 26, 46, 0.6);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  position: sticky;
+  top: 100px;
+  height: max-content;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* Oculto en mobile, se muestra con media query */
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    display: flex;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--nintendo-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 8px;
+}
+
+.counter {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--nintendo-accent);
+  line-height: 1;
+}
+
+.counterSubtitle {
+  font-size: 0.8rem;
+  color: var(--nintendo-text);
+  opacity: 0.7;
+}
+
+.activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filterTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.filterTag button {
+  color: var(--nintendo-red);
+  font-size: 1rem;
+  line-height: 0;
+  margin-left: 4px;
+  padding: 2px;
+}
+
+.filterTag button:hover {
+  filter: brightness(1.5);
+}
+
+.genGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.genToggle {
+  background: var(--nintendo-bg);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.genToggle:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.genToggle.active {
+  background: var(--nintendo-red);
+  border-color: var(--nintendo-red);
+  box-shadow: var(--shadow-sm);
+}

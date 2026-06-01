@@ -1,0 +1,63 @@
+/* global.css */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Nunito:wght@600;700;800&family=Share+Tech+Mono&display=swap');
+
+:root {
+  /* Identidad Nintendo Switch */
+  --nintendo-red: #E4000F;
+  --nintendo-bg: #0A0A14;
+  --nintendo-card-bg: #1E1E2E;
+  --nintendo-accent: #FFCB05;
+  --nintendo-text: #FFFFFF;
+  --nintendo-text-muted: #8E8E9F;
+  
+  /* Radios y Sombras */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 50px;
+  
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-inset: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+  
+  /* Tipografías */
+  --font-main: 'Nunito', 'Lato', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--nintendo-bg);
+  color: var(--nintendo-text);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font-family: inherit;
+}
+
+/* Animations Globales */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
