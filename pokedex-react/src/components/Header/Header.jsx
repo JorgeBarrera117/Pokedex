@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 import { TYPE_COLORS, TYPE_TRANSLATIONS, getTypeIconUrl } from '../../constants/types';
+import { Map } from 'lucide-react';
 
 const Header = ({ searchTerm, onSearch, activeType, onSelectType }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -20,7 +21,7 @@ const Header = ({ searchTerm, onSearch, activeType, onSelectType }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <div className={styles.logo}>POKÉDEX</div>
             <a href="/map.html" target="_blank" rel="noopener noreferrer" className={styles.mapButton}>
-              🗺️ MAPA
+              <Map size={16} strokeWidth={2.5} /> MAPA
             </a>
           </div>
           
