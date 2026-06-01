@@ -17,7 +17,12 @@ const Header = ({ searchTerm, onSearch, activeType, onSelectType }) => {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <div className={styles.topRow}>
-          <div className={styles.logo}>POKÉDEX</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div className={styles.logo}>POKÉDEX</div>
+            <a href="/map.html" target="_blank" rel="noopener noreferrer" className={styles.mapButton}>
+              🗺️ MAPA
+            </a>
+          </div>
           
           <div className={styles.searchContainer}>
             <span className={styles.searchIcon}>⚲</span>
