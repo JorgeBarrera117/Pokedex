@@ -354,7 +354,20 @@
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .navBtn {
-    display: none;
+    display: flex;
+    top: auto;
+    bottom: 20px;
+    transform: none;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+  .prevBtn { left: 16px; }
+  .nextBtn { right: 16px; }
+  
+  .rightCol {
+    padding-bottom: 80px; /* Espacio para los botones de navegación flotantes */
   }
   .modalWrapper {
     height: 95vh;

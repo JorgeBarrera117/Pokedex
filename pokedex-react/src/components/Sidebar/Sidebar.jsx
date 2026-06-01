@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Sidebar.module.css';
+import { TYPE_TRANSLATIONS } from '../../constants/types';
 
 const Sidebar = ({ totalCount, activeType, onClearType, selectedGen, onSelectGen }) => {
   
@@ -31,7 +32,7 @@ const Sidebar = ({ totalCount, activeType, onClearType, selectedGen, onSelectGen
         <div className={styles.activeFilters}>
           {activeType !== 'all' ? (
             <div className={styles.filterTag}>
-              Tipo: {activeType.toUpperCase()}
+              Tipo: {TYPE_TRANSLATIONS[activeType] ? TYPE_TRANSLATIONS[activeType].toUpperCase() : activeType.toUpperCase()}
               <button onClick={onClearType}>×</button>
             </div>
           ) : (

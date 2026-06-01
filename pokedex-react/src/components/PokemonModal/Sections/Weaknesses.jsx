@@ -1,5 +1,5 @@
 import React from 'react';
-import { TYPE_COLORS, getTypeIconUrl } from '../../../constants/types';
+import { TYPE_COLORS, TYPE_TRANSLATIONS, getTypeIconUrl } from '../../../constants/types';
 
 const Weaknesses = ({ weaknesses }) => {
   // Categorize
@@ -33,7 +33,7 @@ const Weaknesses = ({ weaknesses }) => {
           }}
         >
           <img src={getTypeIconUrl(item.type)} alt={item.type} style={{ width: '12px', filter: 'brightness(0) invert(1)' }} />
-          {item.type.toUpperCase()}
+          {TYPE_TRANSLATIONS[item.type] ? TYPE_TRANSLATIONS[item.type].toUpperCase() : item.type.toUpperCase()}
           <span style={{ background: 'rgba(0,0,0,0.3)', padding: '2px 4px', borderRadius: '4px', marginLeft: 'auto' }}>
             ×{item.val}
           </span>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TYPE_COLORS, getTypeIconUrl } from '../../../constants/types';
+import { TYPE_COLORS, TYPE_TRANSLATIONS, getTypeIconUrl } from '../../../constants/types';
 
 const Moves = ({ movesData, typeColor }) => {
   const [activeTab, setActiveTab] = useState('nivel');
@@ -104,7 +104,7 @@ const Moves = ({ movesData, typeColor }) => {
                 <td style={{ padding: '8px' }}>
                   <span style={{ background: TYPE_COLORS[m.type], padding: '2px 6px', borderRadius: '4px', fontSize: '0.6rem', color: 'white', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                     <img src={getTypeIconUrl(m.type)} alt="" style={{ width: '10px', filter: 'brightness(0) invert(1)' }} />
-                    {m.type.substring(0,3).toUpperCase()}
+                    {TYPE_TRANSLATIONS[m.type] ? TYPE_TRANSLATIONS[m.type].substring(0,3).toUpperCase() : m.type.substring(0,3).toUpperCase()}
                   </span>
                 </td>
                 <td style={{ padding: '8px' }}>

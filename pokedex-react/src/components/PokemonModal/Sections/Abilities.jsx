@@ -12,8 +12,13 @@ const Abilities = ({ abilitiesData, typeColor }) => {
           const data = await res.json();
           const entry = data.flavor_text_entries.find(e => e.language.name === 'es') || 
                         data.flavor_text_entries.find(e => e.language.name === 'en');
+          
+          const nameEntry = data.names.find(n => n.language.name === 'es');
+          const abilityNameEs = nameEntry ? nameEntry.name : a.ability.name;
+
           return {
-            name: a.ability.name,
+            name: abilityNameEs,
+            originalName: a.ability.name,
             isHidden: a.is_hidden,
             text: entry ? entry.flavor_text.replace(/\f/g, ' ') : 'Sin descripción.'
           };

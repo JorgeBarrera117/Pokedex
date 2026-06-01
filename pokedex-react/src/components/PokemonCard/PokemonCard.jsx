@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './PokemonCard.module.css';
-import { TYPE_COLORS, getTypeIconUrl } from '../../constants/types';
+import { TYPE_COLORS, TYPE_TRANSLATIONS, STATS_TRANSLATIONS, getTypeIconUrl } from '../../constants/types';
 
 const PokemonCard = ({ pokemon, stats, onClick }) => {
   // If pokemon object doesn't have details yet, it might just be the name/id.
@@ -26,7 +26,7 @@ const PokemonCard = ({ pokemon, stats, onClick }) => {
       <div className={styles.tooltip}>
         {baseStats.slice(0, 3).map(stat => (
           <div key={stat.name} className={styles.statRow}>
-            <span className={styles.statLabel}>{stat.name.toUpperCase()}</span>
+            <span className={styles.statLabel}>{STATS_TRANSLATIONS[stat.name] || stat.name.toUpperCase()}</span>
             <div className={styles.statBarContainer}>
               <div 
                 className={styles.statBar} 
@@ -63,7 +63,7 @@ const PokemonCard = ({ pokemon, stats, onClick }) => {
             style={{ backgroundColor: TYPE_COLORS[type] }}
           >
             <img src={getTypeIconUrl(type)} alt={type} className={styles.typeIcon} />
-            {type}
+            {TYPE_TRANSLATIONS[type] ? TYPE_TRANSLATIONS[type].toUpperCase() : type.toUpperCase()}
           </div>
         ))}
       </div>

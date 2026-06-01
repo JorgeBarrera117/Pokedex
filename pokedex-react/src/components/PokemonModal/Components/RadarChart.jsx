@@ -29,7 +29,7 @@ const RadarChart = ({ stats, color }) => {
     stats.find(s => s.stat.name === 'special-attack').base_stat
   ];
 
-  const labels = ['HP', 'ATK', 'DEF', 'VEL', 'SP.DEF', 'SP.ATK'];
+  const labels = ['PS', 'ATQ', 'DEF', 'VEL', 'DEF.ESP', 'ATQ.ESP'];
 
   // Helper to calculate coordinates
   const getCoordinatesForAngle = (angle, value) => {

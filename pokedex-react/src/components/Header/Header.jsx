@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
-import { TYPE_COLORS, getTypeIconUrl } from '../../constants/types';
+import { TYPE_COLORS, TYPE_TRANSLATIONS, getTypeIconUrl } from '../../constants/types';
 
 const Header = ({ searchTerm, onSearch, activeType, onSelectType }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -48,7 +48,7 @@ const Header = ({ searchTerm, onSearch, activeType, onSelectType }) => {
               onClick={() => onSelectType(type)}
             >
               <img src={getTypeIconUrl(type)} alt={type} className={styles.chipIcon} />
-              {type}
+              {TYPE_TRANSLATIONS[type].toUpperCase()}
             </button>
           ))}
         </div>

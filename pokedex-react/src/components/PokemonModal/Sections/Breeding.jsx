@@ -1,4 +1,5 @@
 import React from 'react';
+import { EGG_GROUPS_TRANSLATIONS, GROWTH_RATE_TRANSLATIONS } from '../../../constants/types';
 
 const Breeding = ({ species, pokeData, typeColor }) => {
   const genderRate = species.gender_rate;
@@ -11,7 +12,7 @@ const Breeding = ({ species, pokeData, typeColor }) => {
   const cards = [
     {
       label: 'GRUPOS HUEVO',
-      value: species.egg_groups.map(g => g.name).join(', ').replace(/-/g, ' ') || 'Desconocido',
+      value: species.egg_groups.map(g => EGG_GROUPS_TRANSLATIONS[g.name] || g.name.replace(/-/g, ' ')).join(', ') || 'Desconocido',
       bar: false
     },
     {
@@ -33,7 +34,7 @@ const Breeding = ({ species, pokeData, typeColor }) => {
     },
     {
       label: 'CRECIMIENTO',
-      value: species.growth_rate.name.replace(/-/g, ' '),
+      value: GROWTH_RATE_TRANSLATIONS[species.growth_rate.name] || species.growth_rate.name.replace(/-/g, ' '),
       bar: false
     }
   ];

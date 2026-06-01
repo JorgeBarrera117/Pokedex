@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PokemonModal.module.css';
-import { TYPE_COLORS, getTypeIconUrl } from '../../constants/types';
+import { TYPE_COLORS, TYPE_TRANSLATIONS, getTypeIconUrl } from '../../constants/types';
 import RadarChart from './Components/RadarChart';
 import Weaknesses from './Sections/Weaknesses';
 import Evolutions from './Sections/Evolutions';
@@ -142,6 +142,32 @@ const PokemonModal = ({ pokemonId, onClose, onNavigate }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose, onNavigate]);
 
+  // Touch Swipe navigation
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEndHandler = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && onNavigate) {
+      onNavigate(1); // Swipe left = next
+    } else if (isRightSwipe && onNavigate) {
+      onNavigate(-1); // Swipe right = prev
+    }
+  };
+
   if (!pokemonId) return null;
 
   const handleBackdropClick = (e) => {
@@ -180,8 +206,8 @@ const PokemonModal = ({ pokemonId, onClose, onNavigate }) => {
     };
 
     const statNames = {
-      'hp': 'HP', 'attack': 'ATK', 'defense': 'DEF',
-      'special-attack': 'SP.ATK', 'special-defense': 'SP.DEF', 'speed': 'VEL'
+      'hp': 'PS', 'attack': 'ATQ', 'defense': 'DEF',
+      'special-attack': 'ATQ.ESP', 'special-defense': 'DEF.ESP', 'speed': 'VEL'
     };
 
     // Shiny image logic
@@ -190,7 +216,12 @@ const PokemonModal = ({ pokemonId, onClose, onNavigate }) => {
       : (pokeData.sprites.other['official-artwork'].front_default || pokeData.sprites.front_default);
 
     return (
-      <div className={styles.modalCard}>
+      <div 
+        className={styles.modalCard}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEndHandler}
+      >
         
         {/* COLUMNA IZQUIERDA (FIJA) */}
         <div className={`${styles.leftCol} ${isShiny ? styles.shinyActive : ''}`} style={{ background: isShiny ? '#1A0A2E' : `linear-gradient(to bottom, ${typeColor}aa 0%, #1a1a2e 100%)` }}>
@@ -217,7 +248,7 @@ const PokemonModal = ({ pokemonId, onClose, onNavigate }) => {
               <label>
                 <input type="checkbox" checked={isShiny} onChange={() => setIsShiny(!isShiny)} />
                 <span className={styles.toggleSlider}></span>
-                <span className={styles.toggleLabel}>SHINY</span>
+                <span className={styles.toggleLabel}>VARIOCOLOR</span>
               </label>
             </div>
           </div>
@@ -231,7 +262,7 @@ const PokemonModal = ({ pokemonId, onClose, onNavigate }) => {
             {pokeData.types.map(t => (
               <span key={t.type.name} className={styles.typeBadge} style={{ backgroundColor: TYPE_COLORS[t.type.name] }}>
                 <img src={getTypeIconUrl(t.type.name)} alt="" className={styles.typeIcon} />
-                {t.type.name.toUpperCase()}
+                {TYPE_TRANSLATIONS[t.type.name] ? TYPE_TRANSLATIONS[t.type.name].toUpperCase() : t.type.name.toUpperCase()}
               </span>
             ))}
           </div>
