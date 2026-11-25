@@ -1,0 +1,1172 @@
+/* Material Design 3 Map / Region Explorer Styles */
+
+.mapContainer {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.viewHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.titleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  padding: 4px 12px;
+  border-radius: var(--md-shape-corner-full);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  width: fit-content;
+}
+
+.badgeIcon {
+  color: var(--md-sys-color-primary);
+}
+
+.mainHeading {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.subHeading {
+  font-size: 0.92rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+  line-height: 1.5;
+  max-width: 680px;
+}
+
+/* Selector Horizontal de Regiones */
+.regionSelectorRow {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.chipsScroll {
+  display: flex;
+  gap: 10px;
+  min-width: max-content;
+}
+
+.regionChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--md-shape-corner-small);
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface-variant);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) ease;
+  user-select: none;
+}
+
+.regionChip:hover {
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  border-color: var(--md-sys-color-outline);
+}
+
+.regionChipSelected {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-color: var(--md-sys-color-secondary);
+  box-shadow: var(--md-sys-elevation-1);
+  font-weight: 700;
+}
+
+.chipGen {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.chipName {
+  font-weight: 700;
+}
+
+.chipCheck {
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+/* Grilla de Contenido: Mapa + Detalles */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Tarjeta del Mapa Visual */
+.mapCanvasCard {
+  background-color: var(--md-sys-color-surface-container-low);
+  border-radius: var(--md-shape-corner-large);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+.canvasWrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 580px;
+  min-height: 520px;
+  overflow: hidden;
+  background-color: #0284c7;
+}
+
+:global([data-theme="light"]) .canvasWrapper {
+  background-color: #38bdf8;
+}
+
+:global([data-theme="amoled"]) .canvasWrapper {
+  background-color: #082f49;
+}
+
+.leafletContainer {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  background-color: #0284c7;
+  outline: none;
+}
+
+:global(.leaflet-container) {
+  background-color: #0284c7 !important;
+  font-family: var(--font-main, sans-serif) !important;
+}
+
+/* ==================== ESTILOS GLOBALES DE MARCADORES LEAFLET ==================== */
+:global(.customLeafletDivIcon) {
+  background: transparent !important;
+  border: none !important;
+  overflow: visible !important;
+}
+
+:global(.leafletMarkerWrapper) {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:global(.leafletMarkerWrapper:hover) {
+  transform: scale(1.18);
+  z-index: 500 !important;
+}
+
+:global(.leafletMarkerWrapper.markerSelected) {
+  transform: scale(1.24);
+  z-index: 1000 !important;
+}
+
+:global(.markerPinBody) {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  border: 2px solid #ffffff;
+  transition: all 0.2s ease;
+}
+
+/* Categorías de Marcadores */
+:global(.markerType-gym .markerPinBody) {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: #fef08a;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.65), 0 3px 8px rgba(0, 0, 0, 0.45);
+}
+
+:global(.markerType-league .markerPinBody) {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  border-color: #fde047;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.75), 0 3px 8px rgba(0, 0, 0, 0.45);
+}
+
+:global(.markerType-city .markerPinBody) {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border-color: #ffffff;
+  border-radius: 9px;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.5), 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+:global(.markerType-town .markerPinBody) {
+  background: linear-gradient(135deg, #059669, #047857);
+  border-color: #ffffff;
+}
+
+:global(.markerType-cave .markerPinBody) {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  border-color: #fef3c7;
+}
+
+:global(.markerType-route .markerPinBody) {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  border-color: #ffffff;
+  width: 28px;
+  height: 28px;
+}
+
+/* Anillo Pulsante de Selección Activa */
+:global(.markerPulseRing) {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  border: 3px solid var(--md-sys-color-primary, #60a5fa);
+  animation: leafletMarkerPulse 1.6s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes leafletMarkerPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.95;
+  }
+  70% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+/* Píldora de Nombre (Label Pill) */
+:global(.markerLabelPill) {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--md-sys-color-surface-container-high, rgba(30, 41, 59, 0.94));
+  color: var(--md-sys-color-on-surface, #f8fafc);
+  border: 1px solid var(--md-sys-color-outline-variant, rgba(255, 255, 255, 0.2));
+  border-radius: 9999px;
+  padding: 2.5px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  max-width: 135px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  transition: all 0.2s ease;
+  line-height: 1.25;
+  z-index: 20;
+}
+
+:global(.markerSelected .markerLabelPill) {
+  background-color: var(--md-sys-color-primary-container, #1e3a8a);
+  color: var(--md-sys-color-on-primary-container, #ffffff);
+  border-color: var(--md-sys-color-primary, #60a5fa);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.4), 0 4px 12px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%) scale(1.08);
+  z-index: 1000;
+}
+
+:global(.labelHidden) {
+  display: none;
+}
+
+:global(.leafletMarkerWrapper:hover .labelHidden) {
+  display: block;
+}
+
+:global(.labelVisible) {
+  display: block;
+}
+
+/* Botones Flotantes de Navegación (Zoom / Reset) */
+.floatingControls {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--md-sys-color-surface-container-highest);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-full);
+  box-shadow: var(--md-sys-elevation-3);
+  padding: 4px;
+  gap: 2px;
+  backdrop-filter: blur(8px);
+}
+
+.controlBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  transition: background-color var(--md-motion-duration-short) ease,
+              transform var(--md-motion-duration-short) ease;
+}
+
+.controlBtn:hover {
+  background-color: var(--md-sys-state-hover);
+  transform: scale(1.08);
+}
+
+.controlBtn:active {
+  transform: scale(0.95);
+}
+
+.controlDivider {
+  width: 1px;
+  height: 22px;
+  background-color: var(--md-sys-color-outline-variant);
+  margin: 0 2px;
+}
+
+/* Ficha Flotante de Zona (Escritorio / Tablet >= 600px) */
+.poiFloatingCard {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  max-width: 360px;
+  width: calc(100% - 32px);
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-medium);
+  padding: 16px;
+  z-index: 25;
+  box-shadow: var(--md-sys-elevation-3);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  backdrop-filter: blur(12px);
+  animation: slideFadeIn 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.poiCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.poiHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.poiIconBox {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.poiName {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.poiBiomeBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.closePoiBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-on-surface-variant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--md-motion-duration-short) ease;
+}
+
+.closePoiBtn:hover {
+  background-color: var(--md-sys-state-hover);
+  color: var(--md-sys-color-on-surface);
+}
+
+.poiDescription {
+  font-size: 0.84rem;
+  line-height: 1.48;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+}
+
+/* Sección de Pokémon Salvajes */
+.wildSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  padding-top: 10px;
+}
+
+.wildHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: 0.02em;
+}
+
+.wildIcon {
+  color: var(--md-sys-color-primary);
+}
+
+.wildPokemonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.wildPokemonCard {
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-small);
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform var(--md-motion-duration-short) ease,
+              background-color var(--md-motion-duration-short) ease,
+              border-color var(--md-motion-duration-short) ease;
+}
+
+.wildPokemonCard:hover {
+  transform: translateY(-2px);
+  background-color: var(--md-sys-color-surface-container-highest);
+  border-color: var(--md-sys-color-primary);
+}
+
+.wildSprite {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.wildInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.wildId {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.wildName {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.1;
+}
+
+.wildTags {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wildLevel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* BottomSheet Compacto para Móvil (< 600px) */
+.mobilePoiSheet {
+  display: none;
+}
+
+.mapFooterNote {
+  padding: 10px 16px;
+  background-color: var(--md-sys-color-surface-container);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tarjeta Lateral de Información de la Región */
+.infoCard {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: var(--md-shape-corner-large);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+.cardHeaderArea {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.genBadge {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--md-sys-color-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.regionTitle {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.rangeText {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.regionDesc {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+}
+
+/* Fichas de Estadísticas Rápidas */
+.statTiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.statTile {
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-medium);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.statNumber {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface);
+}
+
+.statName {
+  font-size: 0.7rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Sección de Iniciales */
+.startersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionSubtitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.startersGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.starterCard {
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-medium);
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform var(--md-motion-duration-short) ease, background-color var(--md-motion-duration-short) ease;
+}
+
+.starterCard:hover {
+  transform: translateY(-2px);
+  background-color: var(--md-sys-color-surface-container-highest);
+  border-color: var(--md-sys-color-outline);
+}
+
+.starterSprite {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.starterId {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 700;
+}
+
+.starterName {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+}
+
+/* Botón Explorar en Pokédex */
+.actionExploreBtn {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
+  border-radius: var(--md-shape-corner-full);
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--md-sys-elevation-1);
+  transition: transform var(--md-motion-duration-short) ease, box-shadow var(--md-motion-duration-short) ease;
+}
+
+.actionExploreBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--md-sys-elevation-2);
+}
+
+/* Responsividad: Pantallas Medianas (Tablets) */
+@media (max-width: 959px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mapCanvasCard {
+    min-height: 440px;
+  }
+
+  .canvasWrapper {
+    min-height: 400px;
+  }
+}
+
+/* Responsividad: Móviles (< 600px) */
+@media (max-width: 599px) {
+  .mapContainer {
+    padding: 16px 12px calc(80px + env(safe-area-inset-bottom, 16px));
+    gap: 16px;
+  }
+
+  .mainHeading {
+    font-size: 1.45rem;
+  }
+
+  .mapCanvasCard {
+    min-height: 380px;
+  }
+
+  .canvasWrapper {
+    min-height: 340px;
+  }
+
+  /* Ocultar card flotante en móvil y activar el BottomSheet */
+  .poiFloatingCard {
+    display: none;
+  }
+
+  .mobilePoiSheet {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--md-sys-color-surface-container-high);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: 20px 20px 0 0;
+    padding: 12px 16px 20px;
+    z-index: 30;
+    box-shadow: var(--md-sys-elevation-4);
+    max-height: 60vh;
+    overflow-y: auto;
+    animation: slideUp 200ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .sheetHandle {
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--md-sys-color-outline-variant);
+    align-self: center;
+    margin-bottom: 4px;
+  }
+
+  .floatingControls {
+    bottom: 12px;
+    right: 12px;
+  }
+}
+
+/* Barra Superior del Mapa: Mini-Buscador e Indicador de Zoom */
+.mapTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: var(--md-sys-color-surface-container);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  z-index: 10;
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  color: var(--md-sys-color-on-surface-variant);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 36px 8px 38px;
+  border-radius: var(--md-shape-corner-full);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  transition: all var(--md-motion-duration-short) ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+  background-color: var(--md-sys-color-surface);
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--md-shape-corner-full);
+}
+
+.clearSearchBtn:hover {
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface);
+}
+
+.searchResultsDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-medium);
+  box-shadow: var(--md-sys-elevation-3);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchResultItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  transition: background-color var(--md-motion-duration-short) ease;
+}
+
+.searchResultItem:last-child {
+  border-bottom: none;
+}
+
+.searchResultItem:hover,
+.searchResultItem:focus-visible {
+  background-color: var(--md-sys-color-surface-container-highest);
+  outline: none;
+}
+
+.searchResultInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.searchResultName {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchResultType {
+  font-size: 0.74rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.zoomIndicatorBadge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--md-shape-corner-full);
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface-variant);
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* Leyenda Cartográfica Colapsable */
+.legendWrapper {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.legendToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--md-shape-corner-full);
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  font-family: var(--font-main);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--md-sys-elevation-2);
+  transition: all var(--md-motion-duration-short) ease;
+  backdrop-filter: blur(8px);
+}
+
+.legendToggleBtn:hover {
+  background-color: var(--md-sys-color-surface-container-highest);
+}
+
+.legendToggleBtnActive {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-color: var(--md-sys-color-primary);
+}
+
+.legendCard {
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-medium);
+  padding: 12px 14px;
+  box-shadow: var(--md-sys-elevation-3);
+  backdrop-filter: blur(12px);
+  width: 210px;
+  animation: fadeIn 150ms ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.legendTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  padding-bottom: 6px;
+}
+
+.legendGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 500;
+}
+
+.legendDotRed {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background-color: #ef4444;
+  flex-shrink: 0;
+}
+
+.legendDotBlue {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background-color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.legendDotGreen {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #10b981;
+  flex-shrink: 0;
+}
+
+.legendDotPurple {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background-color: #7c3aed;
+  flex-shrink: 0;
+}
+
+.legendDotAmber {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background-color: #d97706;
+  flex-shrink: 0;
+}
+
+.legendLineLand {
+  width: 16px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #f4e3b2;
+  border: 1px solid #b89f65;
+  flex-shrink: 0;
+}
+
+.legendLineSea {
+  width: 16px;
+  height: 3px;
+  border-radius: 1px;
+  background: repeating-linear-gradient(90deg, #38bdf8 0, #38bdf8 4px, transparent 4px, transparent 8px);
+  flex-shrink: 0;
+}
+
+/* Ficha de Ubicación en Panel Lateral */
+.backToRegionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--md-sys-color-primary);
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 4px;
+  width: fit-content;
+  transition: opacity var(--md-motion-duration-short) ease;
+}
+
+.backToRegionBtn:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.locationBadgesRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.locationTypeBadge {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  padding: 4px 10px;
+  border-radius: var(--md-shape-corner-full);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.locationBiomeBadge {
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface-variant);
+  padding: 4px 10px;
+  border-radius: var(--md-shape-corner-full);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.locationTitle {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.locationDesc {
+  font-size: 0.92rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.wildTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.wildRarityBadge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.wildMethodBadge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}

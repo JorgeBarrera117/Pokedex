@@ -1,0 +1,361 @@
+/* Material Design 3 Settings View */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 12px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn var(--md-motion-duration-short) ease forwards;
+}
+
+.header {
+  margin-bottom: 4px;
+}
+
+.pageTitle {
+  font-family: var(--font-main);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.pageSubtitle {
+  font-size: 0.86rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 4px;
+}
+
+/* Toast Notificación */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: var(--md-shape-corner-medium);
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: var(--md-sys-elevation-2);
+  animation: fadeIn 0.2s ease;
+}
+
+.toastSuccess {
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.toastError {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border: 1px solid var(--md-sys-color-primary);
+}
+
+/* Tarjeta de Sección MD3 */
+.sectionCard {
+  background-color: var(--md-sys-color-surface-container-low);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-large);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.sectionIcon {
+  color: var(--md-sys-color-primary);
+}
+
+.sectionHeading {
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* Elementos de Ajuste */
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.settingItemCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.titleWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--md-sys-color-on-surface);
+}
+
+.settingTitle {
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+}
+
+.settingDesc {
+  font-size: 0.78rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* MD3 SegmentedButton */
+.segmentedGroup {
+  display: inline-flex;
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-full);
+  padding: 3px;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.segmentedBtn {
+  padding: 6px 14px;
+  border-radius: var(--md-shape-corner-full);
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface-variant);
+  background: none;
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) ease;
+  white-space: nowrap;
+}
+
+.segmentedBtn:hover {
+  color: var(--md-sys-color-on-surface);
+}
+
+.segmentedBtn.segmentedActive {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* MD3 Switch */
+.switchLabel {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.switchLabel input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchSlider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--md-sys-color-surface-container-highest);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 28px;
+  transition: background-color var(--md-motion-duration-short) ease,
+              border-color var(--md-motion-duration-short) ease;
+}
+
+.switchSlider::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--md-sys-color-outline);
+  border-radius: 50%;
+  transition: transform var(--md-motion-duration-short) var(--md-motion-easing-emphasized),
+              background-color var(--md-motion-duration-short) ease;
+}
+
+.switchLabel input:checked + .switchSlider {
+  background-color: var(--md-sys-color-primary);
+  border-color: var(--md-sys-color-primary);
+}
+
+.switchLabel input:checked + .switchSlider::before {
+  transform: translateX(22px);
+  background-color: var(--md-sys-color-on-primary);
+}
+
+/* Botones de Acción */
+.backupActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.actionOutlineBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--md-shape-corner-full);
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) ease;
+}
+
+.actionOutlineBtn:hover {
+  background-color: var(--md-sys-color-surface-container-high);
+  border-color: var(--md-sys-color-outline);
+  transform: translateY(-1px);
+}
+
+.dangerActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--md-shape-corner-full);
+  background-color: rgba(255, 84, 73, 0.1);
+  border: 1px solid rgba(255, 84, 73, 0.3);
+  color: var(--md-sys-color-primary);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) ease;
+  flex-shrink: 0;
+}
+
+.dangerActionBtn:hover {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  transform: translateY(-1px);
+}
+
+/* Diálogo de Confirmación */
+.dialogScrim {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.dialogCard {
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-extra-large);
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--md-sys-elevation-4);
+}
+
+.dialogIcon {
+  color: var(--md-sys-color-primary);
+}
+
+.dialogTitle {
+  font-family: var(--font-main);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.dialogMessage {
+  font-size: 0.86rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.dialogCancelBtn {
+  padding: 8px 16px;
+  border-radius: var(--md-shape-corner-full);
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 600;
+  font-size: 0.84rem;
+}
+
+.dialogCancelBtn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dialogConfirmBtn {
+  padding: 8px 18px;
+  border-radius: var(--md-shape-corner-full);
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+
+.dialogConfirmBtn:hover {
+  background-color: var(--md-sys-color-primary-hover);
+}
+
+/* Responsividad para móviles */
+@media (max-width: 600px) {
+  .settingItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .segmentedGroup {
+    width: 100%;
+  }
+
+  .segmentedBtn {
+    flex: 1;
+    text-align: center;
+    padding: 7px 8px;
+  }
+}

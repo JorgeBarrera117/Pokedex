@@ -1,152 +1,178 @@
+/* Material Design 3 Clean Pokémon Card */
 .card {
-  background-color: var(--nintendo-card-bg);
-  border-radius: var(--radius-lg);
-  padding: 20px 16px;
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: 20px;
+  border: none;
+  padding: 16px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform var(--md-motion-duration-short) var(--md-motion-easing-emphasized),
+              background-color var(--md-motion-duration-short) ease,
+              box-shadow var(--md-motion-duration-short) ease;
+  user-select: none;
+  outline: none;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
-  filter: brightness(1.05);
+  transform: translateY(-2px);
+  background-color: var(--md-sys-color-surface-container-high);
+  box-shadow: var(--md-sys-elevation-2);
 }
 
-.numberTopLeft {
-  position: absolute;
-  top: 12px;
-  left: 16px;
+.card:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+/* 1. Nivel Superior: Minimalista */
+.cardHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+}
+
+.idLabel {
   font-family: var(--font-mono);
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-.watermark {
-  position: absolute;
-  bottom: -10px;
-  right: -5px;
-  font-family: var(--font-main);
-  font-size: 5rem;
-  font-weight: 900;
-  color: #ffffff;
-  opacity: 0.05;
-  pointer-events: none;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.7;
+  letter-spacing: 0.04em;
+  background: transparent;
+  border: none;
+  padding: 0;
   line-height: 1;
 }
 
-.imageContainer {
-  margin: 15px 0 10px;
-  width: 120px;
-  height: 120px;
-  position: relative;
-  z-index: 2;
+.favBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--md-sys-color-outline);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  opacity: 0.6; /* Siempre visible con opacidad sutil tanto en PC como en móviles/Android */
+  transition: opacity var(--md-motion-duration-short) ease,
+              color var(--md-motion-duration-short) ease,
+              transform var(--md-motion-duration-short) ease;
 }
 
-.pokemonImage {
+.favBtn:hover,
+.card:hover .favBtn,
+.card:focus-within .favBtn {
+  opacity: 1;
+}
+
+.favBtn:hover {
+  color: #f59e0b;
+  transform: scale(1.15);
+}
+
+.favBtnActive {
+  opacity: 1 !important;
+  color: #f59e0b !important;
+}
+
+.favBtnActive:hover {
+  color: #d97706 !important;
+  transform: scale(1.15);
+}
+
+/* 2. Nivel Central: Protagonista Sprite con buen aire */
+.spriteContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0;
+  z-index: 1;
+}
+
+.pokemonSprite {
   width: 100%;
   height: 100%;
+  max-width: 105px;
+  max-height: 105px;
   object-fit: contain;
-  transition: transform 0.3s;
+  transition: transform var(--md-motion-duration-short) var(--md-motion-easing-emphasized);
 }
 
-.card:hover .pokemonImage {
-  transform: scale(1.08);
+.card:hover .pokemonSprite {
+  transform: scale(1.06);
 }
 
-.name {
-  font-family: var(--font-main);
-  font-size: 1.1rem;
-  font-weight: 800;
+/* 3. Nivel Inferior: Nombre y Badges */
+.cardFooter {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.pokemonName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
   text-transform: capitalize;
-  margin-bottom: 12px;
-  z-index: 2;
-  letter-spacing: 0.5px;
-}
-
-.types {
-  display: flex;
-  gap: 8px;
-  z-index: 2;
-}
-
-.typeBadge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  box-shadow: var(--shadow-sm);
-}
-
-.typeIcon {
-  width: 14px;
-  height: 14px;
-  filter: brightness(0) invert(1);
-}
-
-/* Tooltip Stats */
-.tooltip {
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(10, 10, 20, 0.95);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  width: 140px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s;
-  z-index: 10;
-  box-shadow: var(--shadow-md);
-  pointer-events: none;
-}
-
-.card:hover .tooltip {
-  opacity: 1;
-  visibility: visible;
-  top: -70px;
-}
-
-.statRow {
-  display: flex;
-  align-items: center;
-  margin-bottom: 4px;
-  gap: 8px;
-}
-
-.statRow:last-child {
-  margin-bottom: 0;
-}
-
-.statLabel {
-  font-size: 0.65rem;
-  font-weight: 800;
-  color: var(--nintendo-text-muted);
-  width: 25px;
-}
-
-.statBarContainer {
-  flex: 1;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  width: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.statBar {
-  height: 100%;
-  border-radius: 2px;
+.typesRow {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Adaptación móvil (< 600px) */
+@media (max-width: 599px) {
+  .card {
+    padding: 12px 10px 14px;
+    border-radius: 16px;
+  }
+
+  .favBtn {
+    opacity: 0.6;
+    padding: 6px;
+  }
+
+  .favBtnActive {
+    opacity: 1 !important;
+  }
+
+  .spriteContainer {
+    max-height: 95px;
+    margin: 4px 0 6px;
+  }
+
+  .pokemonSprite {
+    max-width: 85px;
+    max-height: 85px;
+  }
+
+  .pokemonName {
+    font-size: 13.5px;
+    margin-bottom: 6px;
+  }
 }

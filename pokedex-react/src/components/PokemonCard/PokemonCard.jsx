@@ -1,73 +1,83 @@
-import React from 'react';
 import styles from './PokemonCard.module.css';
-import { TYPE_COLORS, TYPE_TRANSLATIONS, STATS_TRANSLATIONS, getTypeIconUrl } from '../../constants/types';
+import TypeBadge from '../TypeBadge/TypeBadge';
+import { Star } from 'lucide-react';
 
-const PokemonCard = ({ pokemon, stats, onClick }) => {
-  // If pokemon object doesn't have details yet, it might just be the name/id.
-  // Assuming 'pokemon' has { id, name, types, image } and 'stats' is an array of {name, value}
-  const idStr = pokemon.id.toString().padStart(3, '0');
-  const mainType = pokemon.types ? pokemon.types[0] : 'normal';
-  const borderColor = TYPE_COLORS[mainType] || '#fff';
-  
-  // Stats mock if not provided fully
-  const baseStats = stats || [
-    { name: 'HP', value: 45 },
-    { name: 'ATK', value: 49 },
-    { name: 'DEF', value: 49 }
-  ];
+const PokemonCard = ({ pokemon, onClick, isFav = false, onToggleFav, isShiny = false }) => {
+  const types = pokemon.types || [];
+  const idStr = String(pokemon.id).padStart(4, '0');
+
+  const artworkUrl = isShiny
+    ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pokemon.id}.png`
+    : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
+
+  const fallbackUrl = isShiny
+    ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon.id}.png`
+    : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+
+  const handleActivate = () => onClick && onClick(pokemon.id);
 
   return (
-    <div 
-      className={styles.card} 
-      style={{ border: `1px solid ${borderColor}` }}
-      onClick={() => onClick && onClick(pokemon.id)}
+    <article
+      className={styles.card}
+      onClick={handleActivate}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleActivate();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Ver detalles de ${pokemon.name.replace(/-/g, ' ')}`}
     >
-      {/* Tooltip for stats on hover */}
-      <div className={styles.tooltip}>
-        {baseStats.slice(0, 3).map(stat => (
-          <div key={stat.name} className={styles.statRow}>
-            <span className={styles.statLabel}>{STATS_TRANSLATIONS[stat.name] || stat.name.toUpperCase()}</span>
-            <div className={styles.statBarContainer}>
-              <div 
-                className={styles.statBar} 
-                style={{ 
-                  width: `${Math.min((stat.value / 255) * 100, 100)}%`,
-                  backgroundColor: stat.value >= 80 ? '#22c55e' : stat.value >= 50 ? '#facc15' : '#f87171'
-                }}
-              ></div>
-            </div>
-          </div>
-        ))}
+      {/* 1. Fila Superior Minimalista: Número a la izquierda, Favorito a la derecha */}
+      <div className={styles.cardHeader}>
+        <span className={styles.idLabel}>#{idStr}</span>
+        {onToggleFav && (
+          <button
+            type="button"
+            className={`${styles.favBtn} ${isFav ? styles.favBtnActive : ''}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFav(pokemon.id);
+            }}
+            aria-label={isFav ? "Quitar de favoritos" : "Agregar a favoritos"}
+            title={isFav ? "Quitar de favoritos" : "Agregar a favoritos"}
+          >
+            <Star size={15} fill={isFav ? "currentColor" : "none"} strokeWidth={2} />
+          </button>
+        )}
       </div>
 
-      <div className={styles.numberTopLeft}>#{idStr}</div>
-      <div className={styles.watermark}>{idStr}</div>
-      
-      <div className={styles.imageContainer}>
-        <img 
-          src={pokemon.image || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`} 
-          alt={pokemon.name} 
-          className={styles.pokemonImage} 
+      {/* 2. Protagonista Central: Sprite limpio con buen aire alrededor */}
+      <div className={styles.spriteContainer}>
+        <img
+          src={artworkUrl}
+          alt={pokemon.name.replace(/-/g, ' ')}
+          className={styles.pokemonSprite}
           loading="lazy"
-          style={{ filter: `drop-shadow(0 10px 10px ${borderColor}80)` }}
+          decoding="async"
+          onError={(e) => {
+            e.currentTarget.src = fallbackUrl;
+          }}
         />
       </div>
 
-      <h3 className={styles.name}>{pokemon.name.replace('-', ' ')}</h3>
-      
-      <div className={styles.types}>
-        {pokemon.types?.map(type => (
-          <div 
-            key={type} 
-            className={styles.typeBadge} 
-            style={{ backgroundColor: TYPE_COLORS[type] }}
-          >
-            <img src={getTypeIconUrl(type)} alt={type} className={styles.typeIcon} />
-            {TYPE_TRANSLATIONS[type] ? TYPE_TRANSLATIONS[type].toUpperCase() : type.toUpperCase()}
+      {/* 3. Pie Limpio: Nombre en title-medium (15px, semi-bold) y Badges de Tipo Compactos */}
+      <div className={styles.cardFooter}>
+        <h3 className={styles.pokemonName}>
+          {pokemon.name.replace(/-/g, ' ')}
+        </h3>
+
+        {types.length > 0 && (
+          <div className={styles.typesRow}>
+            {types.map(type => (
+              <TypeBadge key={type} type={type} size="small" showIcon={false} />
+            ))}
           </div>
-        ))}
+        )}
       </div>
-    </div>
+    </article>
   );
 };
 

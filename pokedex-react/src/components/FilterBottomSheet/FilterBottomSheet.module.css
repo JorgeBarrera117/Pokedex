@@ -1,0 +1,257 @@
+/* Material Design 3 Modal Bottom Sheet */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  animation: fadeIn var(--md-motion-duration-short) ease forwards;
+}
+
+.bottomSheet {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--md-sys-color-surface-container-high);
+  border-top-left-radius: var(--md-shape-corner-extra-large);
+  border-top-right-radius: var(--md-shape-corner-extra-large);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-bottom: none;
+  max-height: 86vh;
+  max-height: 86dvh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--md-sys-elevation-4);
+  animation: slideUp var(--md-motion-duration-medium) var(--md-motion-easing-emphasized) forwards;
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Drag Handle MD3 */
+.dragHandleContainer {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 6px;
+}
+
+.dragHandle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--md-sys-color-outline-variant);
+}
+
+/* Cabecera */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 24px 16px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+}
+
+.counterHeadline {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  line-height: 1;
+}
+
+.counterSubtitle {
+  font-size: 0.8rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 4px;
+}
+
+.closeBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--md-sys-color-on-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--md-motion-duration-short) ease;
+}
+
+.closeBtn:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Cuerpo Scrollable */
+.body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  scrollbar-width: thin;
+}
+
+.body::-webkit-scrollbar {
+  width: 4px;
+}
+.body::-webkit-scrollbar-thumb {
+  background: var(--md-sys-color-outline-variant);
+  border-radius: 4px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.clearAllBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+  background: none;
+  padding: 4px 8px;
+  border-radius: var(--md-shape-corner-small);
+}
+
+.chipsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.emptyHint {
+  font-size: 0.82rem;
+  color: var(--md-sys-color-outline);
+  font-style: italic;
+}
+
+/* InputChip */
+.inputChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--md-sys-color-surface-container-highest);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  padding: 6px 12px;
+  border-radius: var(--md-shape-corner-small);
+  color: var(--md-sys-color-on-surface);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.inputChip button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--md-sys-color-on-surface-variant);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/* Generaciones Grid */
+.genGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.genChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: var(--md-shape-corner-small);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background-color: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) var(--md-motion-easing-emphasized);
+}
+
+.genChip:hover {
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface);
+}
+
+.genChip.genChipSelected {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-color: var(--md-sys-color-secondary);
+  font-weight: 700;
+}
+
+.chipCheckIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pie con botón FilledButton */
+.footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.filledActionBtn {
+  width: 100%;
+  height: 46px;
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border-radius: var(--md-shape-corner-full);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--md-sys-elevation-2);
+  transition: background-color var(--md-motion-duration-short) ease,
+              transform var(--md-motion-duration-short) ease;
+}
+
+.filledActionBtn:hover {
+  background-color: var(--md-sys-color-primary-hover);
+  transform: translateY(-1px);
+}

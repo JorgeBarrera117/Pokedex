@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const Abilities = ({ abilitiesData, typeColor }) => {
+const Abilities = ({ abilitiesData }) => {
   const [abilities, setAbilities] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const Abilities = ({ abilitiesData, typeColor }) => {
             name: abilityNameEs,
             originalName: a.ability.name,
             isHidden: a.is_hidden,
-            text: entry ? entry.flavor_text.replace(/\f/g, ' ') : 'Sin descripción.'
+            text: entry ? entry.flavor_text.replace(/\f/g, ' ') : 'Sin descripción registrada.'
           };
         });
         const results = await Promise.all(promises);
@@ -34,26 +34,57 @@ const Abilities = ({ abilitiesData, typeColor }) => {
     fetchAbilities();
   }, [abilitiesData]);
 
-  if (loading) return <div style={{ opacity: 0.5 }}>Cargando habilidades...</div>;
+  if (loading) {
+    return (
+      <div style={{ color: 'var(--md-sys-color-on-surface-variant)', fontSize: '0.86rem', padding: '16px 0', textAlign: 'center' }}>
+        Cargando habilidades...
+      </div>
+    );
+  }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       {abilities.map((ab) => (
         <details 
           key={ab.name} 
           style={{ 
-            background: ab.isHidden ? '#2A1A4A' : 'rgba(255,255,255,0.05)', 
-            border: ab.isHidden ? '1px solid #FFCB05' : '1px solid rgba(255,255,255,0.1)',
+            backgroundColor: ab.isHidden ? 'var(--md-sys-color-primary-container)' : 'var(--md-sys-color-surface-container-low)', 
+            border: '1px solid var(--md-sys-color-outline-variant)',
             borderRadius: '12px', 
             padding: '12px 16px',
             cursor: 'pointer'
           }}
         >
-          <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 'bold', outline: 'none' }}>
-            <span style={{ textTransform: 'capitalize' }}>{ab.name.replace(/-/g, ' ')}</span>
-            {ab.isHidden && <span style={{ background: '#FFCB05', color: '#1A1A2E', padding: '2px 8px', borderRadius: '50px', fontSize: '0.6rem', fontWeight: 900 }}>OCULTA</span>}
+          <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 700, outline: 'none' }}>
+            <span style={{ 
+              textTransform: 'capitalize', 
+              fontSize: '0.86rem',
+              color: ab.isHidden ? 'var(--md-sys-color-on-primary-container)' : 'var(--md-sys-color-on-surface)' 
+            }}>
+              {ab.name.replace(/-/g, ' ')}
+            </span>
+            {ab.isHidden && (
+              <span style={{ 
+                backgroundColor: 'var(--md-sys-color-primary)', 
+                color: 'var(--md-sys-color-on-primary)', 
+                padding: '2px 8px', 
+                borderRadius: '999px', 
+                fontSize: '0.62rem', 
+                fontWeight: 800,
+                letterSpacing: '0.04em'
+              }}>
+                HABILIDAD OCULTA
+              </span>
+            )}
           </summary>
-          <div style={{ marginTop: '12px', fontSize: '0.85rem', opacity: 0.9, lineHeight: 1.4, borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '12px' }}>
+          <div style={{ 
+            marginTop: '10px', 
+            fontSize: '0.82rem', 
+            lineHeight: 1.5, 
+            borderTop: '1px solid var(--md-sys-color-outline-variant)', 
+            paddingTop: '10px',
+            color: ab.isHidden ? 'var(--md-sys-color-on-primary-container)' : 'var(--md-sys-color-on-surface-variant)'
+          }}>
             {ab.text}
           </div>
         </details>

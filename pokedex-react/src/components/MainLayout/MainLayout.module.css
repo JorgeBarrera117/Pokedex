@@ -1,46 +1,81 @@
-.container {
-  max-width: 1400px;
+/* Material Design 3 Window Size Classes Layout */
+
+/* Expanded (>= 840px - Escritorio) */
+.layoutContainer {
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 24px 24px 64px;
   display: flex;
-  gap: 32px;
+  gap: 28px;
   align-items: flex-start;
+  min-height: calc(100vh - 140px);
+  min-height: calc(100dvh - 140px);
 }
 
-.mainContent {
+.sidebarWrapper {
+  display: block;
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.mainSurface {
   flex: 1;
-  min-width: 0; /* Prevents overflow */
+  min-width: 0; /* Previene desbordamiento horizontal */
+  display: flex;
+  flex-direction: column;
 }
 
-.grid {
+.pokemonGrid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 16px;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity var(--md-motion-duration-short) ease-in-out;
 }
 
-.grid.fading {
-  opacity: 0;
+.pokemonGrid.isFading {
+  opacity: 0.25;
 }
 
-@media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
+/* Medium (600px - 839px - Tablet) */
+@media (min-width: 600px) and (max-width: 839px) {
+  .layoutContainer {
+    padding: 20px 20px 56px;
+    gap: 0;
+  }
+
+  .sidebarWrapper {
+    display: none; /* En Tablet se usa el Modal Bottom Sheet / Drawer */
+  }
+
+  .pokemonGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
   }
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
+/* Compact (< 600px - Móvil) */
+@media (max-width: 599px) {
+  .layoutContainer {
+    padding: 12px 12px calc(80px + env(safe-area-inset-bottom, 16px));
+    gap: 0;
   }
-}
 
-@media (max-width: 600px) {
-  .container {
-    padding: 16px;
+  .sidebarWrapper {
+    display: none; /* En móvil se activa el Bottom Sheet */
   }
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+
+  .pokemonGrid {
+    grid-template-columns: repeat(var(--mobile-grid-cols, 2), minmax(0, 1fr));
     gap: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .layoutContainer {
+    padding: 10px 8px calc(80px + env(safe-area-inset-bottom, 16px));
+  }
+
+  .pokemonGrid {
+    gap: 8px;
   }
 }

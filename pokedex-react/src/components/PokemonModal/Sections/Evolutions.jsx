@@ -1,49 +1,126 @@
-import React from 'react';
+const EvoNode = ({ node, pokeData, typeColor, setCurrentId, onSelectPokemon }) => {
+  const isCurrentEvo = parseInt(node.id, 10) === pokeData.id;
 
-const EvoNode = ({ node, pokeData, typeColor, setCurrentId }) => {
-  const isCurrentEvo = parseInt(node.id) === pokeData.id;
+  const handleClick = () => {
+    const targetId = parseInt(node.id, 10);
+    if (onSelectPokemon) {
+      onSelectPokemon(targetId);
+    } else if (setCurrentId) {
+      setCurrentId(targetId);
+    }
+  };
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      {/* Nodo Actual */}
+      {/* Tarjeta de Nodo de Evolución Interactiva */}
       <div 
-        style={{ textAlign: 'center', cursor: 'pointer', transition: 'transform 0.2s', transform: isCurrentEvo ? 'scale(1.1)' : 'scale(1)', margin: '0 16px' }}
-        onClick={() => setCurrentId(node.id)}
+        role="button"
+        tabIndex={0}
+        onClick={handleClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
+        aria-label={`Ver detalles de ${node.name}`}
+        title={`Ver ficha de ${node.name}`}
+        style={{ 
+          textAlign: 'center', 
+          cursor: 'pointer', 
+          transition: 'all 0.2s cubic-bezier(0.2, 0, 0, 1)', 
+          margin: '0 12px',
+          padding: '12px 14px',
+          borderRadius: '16px',
+          background: isCurrentEvo ? 'var(--md-sys-color-surface-container-highest)' : 'var(--md-sys-color-surface-container)',
+          border: isCurrentEvo ? '2px solid var(--md-sys-color-primary)' : '1px solid var(--md-sys-color-outline-variant)',
+          boxShadow: isCurrentEvo ? 'var(--md-sys-elevation-2)' : 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          minWidth: '105px'
+        }}
       >
         <div style={{ 
-          width: '80px', height: '80px', 
-          background: isCurrentEvo ? `${typeColor}33` : 'rgba(255,255,255,0.05)', 
+          width: '72px', 
+          height: '72px', 
+          background: isCurrentEvo ? 'var(--md-sys-color-primary-container)' : 'var(--md-sys-color-surface-container-low)', 
           borderRadius: '50%', 
-          display: 'flex', justifyContent: 'center', alignItems: 'center', 
-          border: isCurrentEvo ? `2px solid ${typeColor}` : '2px solid rgba(255,255,255,0.1)', 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
           marginBottom: '8px',
-          boxShadow: isCurrentEvo ? `0 0 20px ${typeColor}66` : 'none',
-          position: 'relative'
+          border: '1px solid var(--md-sys-color-outline-variant)'
         }}>
           <img 
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${node.id}.png`} 
             alt={node.name} 
-            style={{ width: '60px', height: '60px', objectFit: 'contain' }} 
-            onError={(e) => e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${node.id}.png`}
+            style={{ width: '56px', height: '56px', objectFit: 'contain' }} 
+            onError={(e) => { e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${node.id}.png`; }}
           />
         </div>
-        <p style={{ fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', color: isCurrentEvo ? typeColor : 'rgba(255,255,255,0.7)' }}>
+
+        <span style={{ 
+          fontFamily: 'var(--font-mono)', 
+          fontSize: '0.68rem', 
+          color: 'var(--md-sys-color-on-surface-variant)', 
+          fontWeight: 600,
+          marginBottom: '2px'
+        }}>
+          #{String(node.id).padStart(4, '0')}
+        </span>
+
+        <p style={{ 
+          fontSize: '0.78rem', 
+          fontWeight: 700, 
+          textTransform: 'capitalize', 
+          color: isCurrentEvo ? 'var(--md-sys-color-primary)' : 'var(--md-sys-color-on-surface)',
+          margin: 0,
+          lineHeight: 1.2
+        }}>
           {node.name.replace(/-/g, ' ')}
         </p>
+
+        {isCurrentEvo && (
+          <span style={{
+            marginTop: '6px',
+            fontSize: '0.62rem',
+            fontWeight: 800,
+            letterSpacing: '0.04em',
+            background: 'var(--md-sys-color-primary)',
+            color: 'var(--md-sys-color-on-primary)',
+            padding: '2px 8px',
+            borderRadius: '999px',
+            lineHeight: 1
+          }}>
+            ACTUAL
+          </span>
+        )}
       </div>
 
       {/* Hijos (Evoluciones siguientes) */}
-      {node.evolvesTo.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {node.evolvesTo && node.evolvesTo.length > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {node.evolvesTo.map((childEvo) => (
             <div key={childEvo.node.id} style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 8px' }}>
-                <span style={{ fontSize: '0.55rem', fontWeight: 'bold', opacity: 0.8, marginBottom: '4px', whiteSpace: 'nowrap', textTransform: 'capitalize', color: '#FFCB05' }}>
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 6px' }}>
+                <span style={{ 
+                  fontSize: '0.68rem', 
+                  fontWeight: 700, 
+                  marginBottom: '4px', 
+                  whiteSpace: 'nowrap', 
+                  textTransform: 'capitalize', 
+                  color: 'var(--md-sys-color-on-secondary-container)',
+                  background: 'var(--md-sys-color-secondary-container)',
+                  border: '1px solid var(--md-sys-color-outline-variant)',
+                  padding: '2px 8px',
+                  borderRadius: '6px'
+                }}>
                   {childEvo.condition}
                 </span>
-                <div className="evo-arrow" style={{ fontSize: '1.5rem', color: 'rgba(255,255,255,0.2)', fontWeight: 900, lineHeight: 0.5 }}>›</div>
+                <div className="evo-arrow" style={{ fontSize: '1.4rem', color: 'var(--md-sys-color-on-surface-variant)', fontWeight: 900, lineHeight: 0.5 }}>›</div>
               </div>
-              <EvoNode node={childEvo.node} pokeData={pokeData} typeColor={typeColor} setCurrentId={setCurrentId} />
+              <EvoNode node={childEvo.node} pokeData={pokeData} typeColor={typeColor} setCurrentId={setCurrentId} onSelectPokemon={onSelectPokemon} />
             </div>
           ))}
         </div>
@@ -52,26 +129,33 @@ const EvoNode = ({ node, pokeData, typeColor, setCurrentId }) => {
   );
 };
 
-const Evolutions = ({ fullChain, pokeData, typeColor, setCurrentId }) => {
+const Evolutions = ({ fullChain, pokeData, typeColor, setCurrentId, onSelectPokemon }) => {
   return (
     <div style={{ 
       display: 'flex', 
       alignItems: 'center', 
-      background: 'rgba(255,255,255,0.02)', 
+      background: 'var(--md-sys-color-surface-container-low)', 
+      border: '1px solid var(--md-sys-color-outline-variant)',
       padding: '24px 16px', 
       borderRadius: '16px', 
       overflowX: 'auto'
     }}>
-      <EvoNode node={fullChain} pokeData={pokeData} typeColor={typeColor} setCurrentId={setCurrentId} />
+      <EvoNode 
+        node={fullChain} 
+        pokeData={pokeData} 
+        typeColor={typeColor} 
+        setCurrentId={setCurrentId} 
+        onSelectPokemon={onSelectPokemon}
+      />
       
       <style>{`
         .evo-arrow {
-          animation: slideRight 1.5s infinite;
+          animation: slideRight 1.5s infinite ease-in-out;
         }
         @keyframes slideRight {
-          0% { transform: translateX(-5px); opacity: 0.5; }
-          50% { transform: translateX(5px); opacity: 1; }
-          100% { transform: translateX(-5px); opacity: 0.5; }
+          0% { transform: translateX(-3px); opacity: 0.6; }
+          50% { transform: translateX(3px); opacity: 1; }
+          100% { transform: translateX(-3px); opacity: 0.6; }
         }
       `}</style>
     </div>

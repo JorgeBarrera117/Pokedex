@@ -1,54 +1,96 @@
 .sidebar {
-  width: 260px;
-  background-color: rgba(26, 26, 46, 0.6);
+  width: 270px;
+  background-color: var(--nintendo-card-bg);
   border-radius: var(--radius-md);
-  padding: 24px;
+  padding: 22px;
   position: sticky;
-  top: 100px;
+  top: 90px;
   height: max-content;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 110px);
+  max-height: calc(100dvh - 110px);
   overflow-y: auto;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--nintendo-border);
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  /* Oculto en mobile, se muestra con media query */
+  gap: 22px;
+  box-shadow: var(--shadow-sm);
+  scrollbar-width: thin;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.mobileHeader {
   display: none;
 }
 
-@media (min-width: 1024px) {
-  .sidebar {
-    display: flex;
-  }
+.mobileFooter {
+  display: none;
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
 }
 
 .title {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
   color: var(--nintendo-text-muted);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 8px;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
+}
+
+.sectionHeader .title {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.resetBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--nintendo-accent);
+  background: rgba(255, 203, 5, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  transition: all 0.15s ease;
+}
+
+.resetBtn:hover {
+  background: rgba(255, 203, 5, 0.2);
 }
 
 .counter {
-  font-size: 2rem;
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
   font-weight: 900;
   color: var(--nintendo-accent);
   line-height: 1;
 }
 
 .counterSubtitle {
-  font-size: 0.8rem;
-  color: var(--nintendo-text);
-  opacity: 0.7;
+  font-size: 0.78rem;
+  color: var(--nintendo-text-secondary);
+  margin-top: 4px;
 }
 
 .activeFilters {
@@ -57,27 +99,35 @@
   gap: 8px;
 }
 
+.emptyFilterText {
+  font-size: 0.78rem;
+  color: var(--nintendo-text-muted);
+  font-style: italic;
+}
+
 .filterTag {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255,255,255,0.1);
-  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 4px 10px;
   border-radius: var(--radius-pill);
-  font-size: 0.75rem;
-  font-weight: bold;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: white;
 }
 
 .filterTag button {
-  color: var(--nintendo-red);
-  font-size: 1rem;
-  line-height: 0;
-  margin-left: 4px;
-  padding: 2px;
+  color: var(--nintendo-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
 }
 
 .filterTag button:hover {
-  filter: brightness(1.5);
+  color: #f87171;
 }
 
 .genGrid {
@@ -87,22 +137,122 @@
 }
 
 .genToggle {
-  background: var(--nintendo-bg);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: white;
-  padding: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--nintendo-text-secondary);
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
-  font-weight: bold;
-  transition: all 0.2s;
+  font-weight: 800;
+  transition: all 0.18s ease;
+  min-height: 36px;
+  text-align: center;
 }
 
 .genToggle:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .genToggle.active {
   background: var(--nintendo-red);
   border-color: var(--nintendo-red);
-  box-shadow: var(--shadow-sm);
+  color: white;
+  box-shadow: 0 2px 8px rgba(228, 0, 15, 0.4);
+}
+
+.mobileBackdrop {
+  display: none;
+}
+
+/* Modo Drawer para móviles y tablets (< 1024px) */
+@media (max-width: 1023px) {
+  .sidebar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 320px;
+    max-width: 86vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    z-index: 1200;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.8);
+    transform: translateX(105%);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: #121422;
+    border-left: 1px solid var(--nintendo-border);
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .sidebar.mobileOpen {
+    transform: translateX(0);
+  }
+
+  .mobileBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1190;
+    animation: fadeIn 0.2s ease forwards;
+  }
+
+  .mobileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--nintendo-border);
+    padding-bottom: 12px;
+  }
+
+  .mobileHeaderTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--nintendo-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .closeMobileBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobileFooter {
+    display: block;
+    margin-top: auto;
+    padding-top: 14px;
+  }
+
+  .applyMobileBtn {
+    width: 100%;
+    background-color: var(--nintendo-red);
+    color: white;
+    font-weight: 900;
+    font-size: 0.85rem;
+    padding: 12px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(228, 0, 15, 0.4);
+  }
 }

@@ -1,0 +1,74 @@
+/* Material Design 3 Card Skeleton */
+.skeletonCard {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: 20px;
+  padding: 16px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-height: 220px;
+  overflow: hidden;
+}
+
+.shimmerBase {
+  background: linear-gradient(
+    90deg,
+    var(--md-sys-color-surface-container) 0%,
+    var(--md-sys-color-surface-container-highest) 50%,
+    var(--md-sys-color-surface-container) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s infinite ease-in-out;
+}
+
+.skeletonNumber {
+  composes: shimmerBase;
+  align-self: flex-start;
+  width: 44px;
+  height: 16px;
+  border-radius: var(--md-shape-corner-extra-small);
+  margin-bottom: 8px;
+}
+
+.skeletonImage {
+  composes: shimmerBase;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 6px 0 12px;
+}
+
+.skeletonTitle {
+  composes: shimmerBase;
+  width: 65%;
+  height: 18px;
+  border-radius: var(--md-shape-corner-small);
+  margin-bottom: 12px;
+}
+
+.skeletonBadges {
+  display: flex;
+  gap: 6px;
+}
+
+.skeletonBadge {
+  composes: shimmerBase;
+  width: 52px;
+  height: 22px;
+  border-radius: var(--md-shape-corner-full);
+}
+
+@media (max-width: 599px) {
+  .skeletonCard {
+    padding: 12px 10px 14px;
+    border-radius: var(--md-shape-corner-medium);
+    min-height: 185px;
+  }
+
+  .skeletonImage {
+    width: 80px;
+    height: 80px;
+  }
+}

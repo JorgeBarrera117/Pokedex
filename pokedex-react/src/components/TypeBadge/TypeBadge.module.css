@@ -1,0 +1,58 @@
+.typeBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-family: var(--font-main);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  user-select: none;
+  white-space: nowrap;
+  transition: transform var(--md-motion-duration-short) var(--md-motion-easing-emphasized),
+              opacity var(--md-motion-duration-short) ease;
+}
+
+.typeBadge:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Size Variants */
+.small {
+  height: 22px;
+  padding: 0 8px;
+  font-size: 0.68rem;
+  border-radius: 8px;
+}
+
+.small .typeIcon {
+  width: 11px;
+  height: 11px;
+}
+
+.medium {
+  height: 28px;
+  padding: 0 12px;
+  font-size: 0.76rem;
+  border-radius: 10px;
+  gap: 6px;
+}
+
+.medium .typeIcon {
+  width: 13px;
+  height: 13px;
+}
+
+.typeIcon {
+  flex-shrink: 0;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.typeLabel {
+  display: inline-block;
+  line-height: 1;
+}

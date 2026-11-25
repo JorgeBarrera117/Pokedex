@@ -1,28 +1,141 @@
-/* global.css */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Nunito:wght@600;700;800&family=Share+Tech+Mono&display=swap');
+/* Material Design 3 (Material You) Global Tokens & Base */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 :root {
-  /* Identidad Nintendo Switch */
-  --nintendo-red: #E4000F;
-  --nintendo-bg: #0A0A14;
-  --nintendo-card-bg: #1E1E2E;
-  --nintendo-accent: #FFCB05;
-  --nintendo-text: #FFFFFF;
-  --nintendo-text-muted: #8E8E9F;
-  
-  /* Radios y Sombras */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-pill: 50px;
-  
-  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
-  --shadow-inset: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
-  
-  /* Tipografías */
-  --font-main: 'Nunito', 'Lato', sans-serif;
-  --font-mono: 'Share Tech Mono', monospace;
+  /* MD3 Color Tokens - Dark Theme Baseline (Authentic HCT Pastel Palette) */
+  --md-sys-color-surface: #131316;
+  --md-sys-color-surface-dim: #101013;
+  --md-sys-color-surface-bright: #38393f;
+  --md-sys-color-surface-container-lowest: #0e0e11;
+  --md-sys-color-surface-container-low: #191a1f;
+  --md-sys-color-surface-container: #1e1f24;
+  --md-sys-color-surface-container-high: #28292f;
+  --md-sys-color-surface-container-highest: #33353d;
+
+  --md-sys-color-on-surface: #e4e2e6;
+  --md-sys-color-on-surface-variant: #c7c5d0;
+  --md-sys-color-outline: #918f9a;
+  --md-sys-color-outline-variant: rgba(255, 255, 255, 0.08);
+
+  /* Primary Accent: Soft Pastel Lavender (Material You) */
+  --md-sys-color-primary: #bac3ff;
+  --md-sys-color-primary-hover: #cad0ff;
+  --md-sys-color-primary-container: #394379;
+  --md-sys-color-on-primary: #1c2960;
+  --md-sys-color-on-primary-container: #dee1ff;
+
+  /* Secondary: Soft Slate Violet */
+  --md-sys-color-secondary: #c7c5d0;
+  --md-sys-color-secondary-container: #45464f;
+  --md-sys-color-on-secondary: #2e3038;
+  --md-sys-color-on-secondary-container: #e3e1ec;
+
+  /* Tertiary: Soft Pastel Amber (For Shiny & Accents) */
+  --md-sys-color-tertiary: #ffd977;
+  --md-sys-color-tertiary-container: #4b3e18;
+  --md-sys-color-on-tertiary: #422d00;
+  --md-sys-color-on-tertiary-container: #ffe088;
+
+  /* MD3 State Layers (Opacities) */
+  --md-sys-state-hover: rgba(255, 255, 255, 0.08);
+  --md-sys-state-pressed: rgba(255, 255, 255, 0.12);
+  --md-sys-state-focus: rgba(186, 195, 255, 0.15);
+
+  /* Backwards compatibility aliases */
+  --nintendo-bg: var(--md-sys-color-surface);
+  --nintendo-card-bg: var(--md-sys-color-surface-container);
+  --nintendo-card-hover: var(--md-sys-color-surface-container-high);
+  --nintendo-accent: var(--md-sys-color-primary);
+  --nintendo-red: var(--md-sys-color-primary);
+  --nintendo-text: var(--md-sys-color-on-surface);
+  --nintendo-text-secondary: var(--md-sys-color-on-surface-variant);
+  --nintendo-text-muted: var(--md-sys-color-outline);
+  --nintendo-border: var(--md-sys-color-outline-variant);
+
+  /* MD3 Shape Tokens */
+  --md-shape-corner-none: 0px;
+  --md-shape-corner-extra-small: 4px;
+  --md-shape-corner-small: 8px;
+  --md-shape-corner-medium: 12px;
+  --md-shape-corner-large: 20px;
+  --md-shape-corner-extra-large: 28px;
+  --md-shape-corner-full: 9999px;
+
+  /* MD3 Elevation Shadows (Soft & Subtle, No Harsh Lighting) */
+  --md-sys-elevation-0: none;
+  --md-sys-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --md-sys-elevation-2: 0 2px 6px rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-3: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --md-sys-elevation-4: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+  /* MD3 Motion */
+  --md-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --md-motion-duration-short: 200ms;
+  --md-motion-duration-medium: 300ms;
+
+  /* Typography */
+  --font-main: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Share Tech Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Tema Claro (Light MD3) */
+[data-theme="light"] {
+  --md-sys-color-surface: #faf8fd;
+  --md-sys-color-surface-dim: #ded8e1;
+  --md-sys-color-surface-bright: #ffffff;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f5f2f8;
+  --md-sys-color-surface-container: #f0edf4;
+  --md-sys-color-surface-container-high: #eae7ef;
+  --md-sys-color-surface-container-highest: #e4e1e9;
+
+  --md-sys-color-on-surface: #1a1b1f;
+  --md-sys-color-on-surface-variant: #45464f;
+  --md-sys-color-outline: #767680;
+  --md-sys-color-outline-variant: #c7c5d0;
+
+  --md-sys-color-primary: #48558e;
+  --md-sys-color-primary-hover: #3b477e;
+  --md-sys-color-primary-container: #dee1ff;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-on-primary-container: #001158;
+
+  --md-sys-color-secondary: #5a5d6b;
+  --md-sys-color-secondary-container: #dfe1f2;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-on-secondary-container: #171a26;
+
+  --md-sys-color-tertiary: #715b00;
+  --md-sys-color-tertiary-container: #ffe088;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-on-tertiary-container: #231b00;
+
+  --md-sys-state-hover: rgba(0, 0, 0, 0.05);
+  --md-sys-state-pressed: rgba(0, 0, 0, 0.1);
+  --md-sys-state-focus: rgba(72, 85, 142, 0.15);
+}
+
+/* Tema AMOLED Negro Puro */
+[data-theme="amoled"] {
+  --md-sys-color-surface: #000000;
+  --md-sys-color-surface-dim: #000000;
+  --md-sys-color-surface-bright: #1c1c1f;
+  --md-sys-color-surface-container-lowest: #000000;
+  --md-sys-color-surface-container-low: #0a0a0c;
+  --md-sys-color-surface-container: #121215;
+  --md-sys-color-surface-container-high: #1b1c20;
+  --md-sys-color-surface-container-highest: #26272c;
+
+  --md-sys-color-on-surface: #f0eff4;
+  --md-sys-color-on-surface-variant: #c7c5d0;
+  --md-sys-color-outline: #75757d;
+  --md-sys-color-outline-variant: rgba(255, 255, 255, 0.1);
+
+  --md-sys-color-primary: #bac3ff;
+  --md-sys-color-primary-hover: #cad0ff;
+  --md-sys-color-primary-container: #394379;
+  --md-sys-color-on-primary: #1c2960;
+  --md-sys-color-on-primary-container: #dee1ff;
 }
 
 * {
@@ -31,14 +144,21 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  background-color: var(--nintendo-bg);
-  color: var(--nintendo-text);
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
+  font-variant-numeric: tabular-nums;
 }
 
 button {
@@ -46,6 +166,16 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  touch-action: manipulation;
+}
+
+/* State Layers & Accessible Focus Rings (No Red Rings/Outlines) */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
 }
 
 input {
@@ -54,10 +184,24 @@ input {
 
 /* Animations Globales */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes skeletonShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .fade-in {
-  animation: fadeIn 0.2s ease-out forwards;
+  animation: fadeIn var(--md-motion-duration-short) var(--md-motion-easing-emphasized) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

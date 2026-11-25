@@ -1,180 +1,286 @@
 .header {
   background-color: var(--nintendo-red);
   background-image: 
-    linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%),
-    linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%);
+    linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 50%),
+    linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0.15) 100%);
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
   box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
-  padding: 16px 24px;
+  transition: padding 0.25s ease, box-shadow 0.25s ease;
+  padding: 14px 20px 12px;
 }
 
 .header.scrolled {
-  padding: 8px 24px;
+  padding: 8px 20px 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .container {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .topRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .logo {
   font-family: var(--font-main);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 900;
   color: white;
   letter-spacing: 1px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  user-select: none;
 }
 
-.logo::before {
-  content: '';
+.pokeballLogoDot {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   background-color: white;
   border-radius: 50%;
   border: 4px solid var(--nintendo-bg);
   box-shadow: 0 0 0 2px white;
+  flex-shrink: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .mapButton {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.25);
   color: white;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  min-height: 36px;
 }
 
 .mapButton:hover {
   background-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  transform: translateY(-1px);
+}
+
+.mobileFilterBtn {
+  display: none;
+  background-color: #161824;
+  color: var(--nintendo-accent);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 800;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 203, 5, 0.3);
+  min-height: 36px;
+  transition: all 0.2s ease;
+}
+
+.mobileFilterBtn:hover {
+  background-color: #1f2233;
+}
+
+.filterBadge {
+  background-color: var(--nintendo-accent);
+  color: #161824;
+  font-size: 0.7rem;
+  font-weight: 900;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
 }
 
 .searchContainer {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
 }
 
 .searchIcon {
   position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 14px;
   color: var(--nintendo-red);
-  font-size: 1.2rem;
-  font-weight: bold;
+  pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
-  padding: 10px 16px 10px 44px;
+  padding: 10px 40px 10px 42px;
   border-radius: var(--radius-pill);
   border: 2px solid transparent;
-  background-color: #f0f0f0;
-  font-size: 0.95rem;
+  background-color: #f3f4f6;
+  font-size: 0.92rem;
   font-weight: 700;
-  color: var(--nintendo-bg);
+  color: #111827;
   outline: none;
   transition: all 0.2s ease;
+  min-height: 40px;
 }
 
 .searchInput::placeholder {
-  color: #999;
+  color: #6b7280;
+  font-weight: 500;
 }
 
 .searchInput:focus {
   background-color: #ffffff;
   border-color: var(--nintendo-accent);
-  box-shadow: 0 0 0 4px rgba(255, 203, 5, 0.4);
+  box-shadow: 0 0 0 3px rgba(255, 203, 5, 0.45);
 }
 
+.clearSearchBtn {
+  position: absolute;
+  right: 12px;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.clearSearchBtn:hover {
+  background: rgba(0, 0, 0, 0.18);
+  color: #111827;
+}
+
+/* Strip de Tipos */
 .filtersContainer {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   overflow-x: auto;
-  padding-bottom: 8px;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
-/* Scrollbar personalizada */
 .filtersContainer::-webkit-scrollbar {
-  height: 6px;
+  height: 4px;
 }
+
 .filtersContainer::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 }
+
 .filtersContainer::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
-.filtersContainer::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
 
 .filterChip {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 16px;
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  color: white;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-sm);
-  filter: saturate(0.85);
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-height: 36px;
+  user-select: none;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .filterChip:hover {
-  filter: saturate(1) brightness(1.1);
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
 .filterChip.active {
-  filter: saturate(1.2);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8), 0 4px 10px rgba(0, 0, 0, 0.4);
   transform: scale(0.97);
-  box-shadow: var(--shadow-inset), var(--shadow-md);
-  border: 1px solid rgba(255,255,255,0.8);
+  font-weight: 900;
 }
 
 .chipIcon {
-  width: 16px;
-  height: 16px;
-  filter: brightness(0) invert(1);
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
-/* Responsiveness */
+/* Responsividad para Móviles y Tablets */
+@media (max-width: 1023px) {
+  .mobileFilterBtn {
+    display: inline-flex;
+  }
+}
+
 @media (max-width: 768px) {
+  .header {
+    padding: 10px 14px 10px;
+  }
+
   .topRow {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: stretch;
+    gap: 10px;
   }
+
+  .brandRow {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
   .searchContainer {
     max-width: 100%;
+  }
+
+  .filterChip {
+    padding: 6px 12px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mapText {
+    display: none;
+  }
+  .mapButton {
+    padding: 6px 10px;
   }
 }

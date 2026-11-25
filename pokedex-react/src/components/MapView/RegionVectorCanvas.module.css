@@ -1,0 +1,1792 @@
+/* src/components/MapView/RegionVectorCanvas.module.css */
+
+.svgCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+  touch-action: none;
+}
+
+/* 1. Fondo de Océano Adaptativo */
+.oceanBg {
+  fill: #162436; /* Modo Oscuro MD3 Azul Marino */
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .oceanBg {
+  fill: #D3E6FA; /* Modo Claro Azul Celeste Canónico */
+}
+
+:global([data-theme="amoled"]) .oceanBg {
+  fill: #0c1520;
+}
+
+/* Cuadrícula Cartográfica */
+.gridLine {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+:global([data-theme="light"]) .gridLine {
+  color: rgba(30, 58, 138, 0.12);
+}
+
+/* Ondas Batimétricas Concéntricas Cartográficas */
+.bathymetricRing1 {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 1.5px;
+  stroke-opacity: 0.22;
+  stroke-dasharray: 4 6;
+  pointer-events: none;
+}
+
+:global([data-theme="light"]) .bathymetricRing1 {
+  stroke: #0284c7;
+  stroke-opacity: 0.28;
+}
+
+.bathymetricRing2 {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 1.2px;
+  stroke-opacity: 0.12;
+  stroke-dasharray: 3 8;
+  pointer-events: none;
+}
+
+:global([data-theme="light"]) .bathymetricRing2 {
+  stroke: #0284c7;
+  stroke-opacity: 0.16;
+}
+
+/* Relieve Montañoso Cartográfico con Sombra Direccional */
+.mountainLight {
+  fill: #cbd5e1;
+  stroke: #94a3b8;
+  stroke-width: 1px;
+}
+
+.mountainShadow {
+  fill: #64748b;
+  stroke: #475569;
+  stroke-width: 1px;
+}
+
+.mountainSnow {
+  fill: #f8fafc;
+  stroke: #e2e8f0;
+  stroke-width: 1px;
+}
+
+:global([data-theme="light"]) .mountainLight {
+  fill: #e2e8f0;
+  stroke: #cbd5e1;
+}
+
+:global([data-theme="light"]) .mountainShadow {
+  fill: #94a3b8;
+  stroke: #64748b;
+}
+
+/* Copas de Bosques y Selvas Cartográficas */
+.forestCanopy {
+  fill: #15803d;
+  stroke: #166534;
+  stroke-width: 1.2px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+}
+
+:global([data-theme="light"]) .forestCanopy {
+  fill: #22c55e;
+  stroke: #15803d;
+}
+
+/* Dunas de Desierto */
+.duneRidge {
+  fill: none;
+  stroke: #d97706;
+  stroke-width: 1.5px;
+  stroke-opacity: 0.45;
+  stroke-linecap: round;
+}
+
+:global([data-theme="light"]) .duneRidge {
+  stroke: #b45309;
+  stroke-opacity: 0.55;
+}
+
+/* Reflejos de Agua en Lagos */
+.waterReflection {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.5px;
+  stroke-opacity: 0.55;
+  stroke-linecap: round;
+}
+
+/* 2. Continente Kanto Canónico (Verde Clásico de la Pokédex) */
+.kantoMainLand {
+  fill: #224229; /* Modo Oscuro: Verde Pradera Tonal */
+  stroke: #3b7449;
+  stroke-width: 2px;
+  transition: fill var(--md-motion-duration-short) ease,
+              stroke var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .kantoMainLand {
+  fill: #86efac; /* Modo Claro: Verde Hierba Cálido como en el juego original */
+  stroke: #22c55e;
+  stroke-width: 2.5px;
+}
+
+:global([data-theme="amoled"]) .kantoMainLand {
+  fill: #132b1a;
+  stroke: #275936;
+}
+
+/* 2b. Continente Johto Canónico Estilo HGSS (Pokégear Town Map) */
+.johtoMainLand {
+  fill: #224229;
+  stroke: #d49b72;
+  stroke-width: 3px;
+  transition: fill var(--md-motion-duration-short) ease,
+              stroke var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .johtoMainLand {
+  fill: #86efac;
+  stroke: #c8885b;
+  stroke-width: 3.5px;
+}
+
+:global([data-theme="amoled"]) .johtoMainLand {
+  fill: #122818;
+  stroke: #965f3a;
+}
+
+.johtoHighlands {
+  fill: #6e462c;
+  stroke: #54331d;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .johtoHighlands {
+  fill: #d49b72;
+  stroke: #b87b51;
+  stroke-width: 2.5px;
+}
+
+:global([data-theme="amoled"]) .johtoHighlands {
+  fill: #452917;
+  stroke: #331d0e;
+}
+
+.johtoValley {
+  fill: #1d4d31;
+  stroke: #2a6944;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .johtoValley {
+  fill: #6ee7b7;
+  stroke: #34d399;
+  stroke-width: 2px;
+}
+
+:global([data-theme="amoled"]) .johtoValley {
+  fill: #123320;
+  stroke: #1e5235;
+}
+
+.johtoWaterChannel {
+  fill: #0284c7;
+}
+
+:global([data-theme="light"]) .johtoWaterChannel {
+  fill: #38bdf8;
+}
+
+.johtoLakeBank {
+  fill: #166534;
+  stroke: #2b2d31;
+  stroke-width: 3px;
+}
+
+:global([data-theme="light"]) .johtoLakeBank {
+  fill: #4ade80;
+  stroke: #1f2937;
+  stroke-width: 3.5px;
+}
+
+.johtoLakeWater {
+  fill: #0369a1;
+}
+
+:global([data-theme="light"]) .johtoLakeWater {
+  fill: #0284c7;
+}
+
+/* 2c. Continente Hoenn Canónico Estilo PokéNav (R/S/E) */
+.hoennOcean {
+  fill: #1e40af;
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .hoennOcean {
+  fill: #3b82f6;
+}
+
+:global([data-theme="amoled"]) .hoennOcean {
+  fill: #0c1c42;
+}
+
+.hoennDiveGrid {
+  pointer-events: none;
+}
+
+.hoennDiveTile {
+  fill: #0284c7;
+  stroke: #1d4ed8;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .hoennDiveTile {
+  fill: #38bdf8;
+  stroke: #1d4ed8;
+}
+
+.hoennMainLand {
+  fill: #15803d;
+  stroke: #ffffff;
+  stroke-width: 5px;
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .hoennMainLand {
+  fill: #4ade80;
+  stroke: #ffffff;
+  stroke-width: 5px;
+}
+
+:global([data-theme="amoled"]) .hoennMainLand {
+  fill: #0e4020;
+  stroke: #ffffff;
+  stroke-width: 5px;
+}
+
+.hoennDeepForest {
+  fill: #14532d;
+}
+
+:global([data-theme="light"]) .hoennDeepForest {
+  fill: #22c55e;
+}
+
+.hoennVolcanoRidge {
+  fill: #78350f;
+  stroke: #451a03;
+  stroke-width: 1.5px;
+}
+
+:global([data-theme="light"]) .hoennVolcanoRidge {
+  fill: #b45309;
+  stroke: #78350f;
+  stroke-width: 1.5px;
+}
+
+.hoennDesert {
+  fill: #ca8a04;
+  stroke: #a16207;
+  stroke-width: 1.5px;
+  opacity: 0.8;
+}
+
+:global([data-theme="light"]) .hoennDesert {
+  fill: #fde047;
+  stroke: #eab308;
+  stroke-width: 1.5px;
+  opacity: 0.9;
+}
+
+.hoennIsland {
+  fill: #15803d;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+}
+
+:global([data-theme="light"]) .hoennIsland {
+  fill: #4ade80;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+}
+
+/* 2d. Continente Sinnoh Canónico Estilo Diamante / Perla / Platino */
+.sinnohOcean {
+  fill: #0284c7;
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .sinnohOcean {
+  fill: #38bdf8;
+}
+
+:global([data-theme="amoled"]) .sinnohOcean {
+  fill: #082f49;
+}
+
+.sinnohMainLand {
+  fill: #3f6212;
+  stroke: #4d7c0f;
+  stroke-width: 2.5px;
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .sinnohMainLand {
+  fill: #84cc16;
+  stroke: #65a30d;
+}
+
+:global([data-theme="amoled"]) .sinnohMainLand {
+  fill: #1a2e05;
+  stroke: #365314;
+}
+
+.sinnohCoronet {
+  fill: #78350f;
+  stroke: #451a03;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .sinnohCoronet {
+  fill: #ca8a04;
+  stroke: #a16207;
+}
+
+.sinnohSnowCap {
+  fill: #475569;
+  stroke: #334155;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .sinnohSnowCap {
+  fill: #f8fafc;
+  stroke: #cbd5e1;
+}
+
+.sinnohLakeBorder {
+  fill: #ffffff;
+  stroke: #cbd5e1;
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.sinnohLakeWater {
+  fill: #2dd4bf;
+}
+
+/* 2e. Continente Teselia / Unova Canónico Estilo Blanco 2 y Negro 2 */
+.unovaOcean {
+  fill: #13273e;
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .unovaOcean {
+  fill: #bae6fd;
+}
+
+:global([data-theme="amoled"]) .unovaOcean {
+  fill: #0a1522;
+}
+
+.unovaMainLand {
+  fill: #14532d;
+  stroke: #166534;
+  stroke-width: 2.5px;
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .unovaMainLand {
+  fill: #4ade80;
+  stroke: #22c55e;
+}
+
+:global([data-theme="amoled"]) .unovaMainLand {
+  fill: #0c331a;
+  stroke: #14532d;
+}
+
+.unovaDeepForest {
+  fill: #052e16;
+  stroke: #14532d;
+  stroke-width: 1.5px;
+}
+
+:global([data-theme="light"]) .unovaDeepForest {
+  fill: #15803d;
+  stroke: #166534;
+}
+
+.unovaMountain {
+  fill: #334155;
+  stroke: #1e293b;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .unovaMountain {
+  fill: #94a3b8;
+  stroke: #64748b;
+}
+
+.unovaDesert {
+  fill: #b45309;
+  stroke: #78350f;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .unovaDesert {
+  fill: #fde047;
+  stroke: #ca8a04;
+}
+
+:global([data-theme="amoled"]) .unovaDesert {
+  fill: #78350f;
+  stroke: #451a03;
+}
+
+.unovaWaterMoat {
+  fill: #0284c7;
+  stroke: #0369a1;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .unovaWaterMoat {
+  fill: #38bdf8;
+  stroke: #0284c7;
+}
+
+.unovaEntralinkLand {
+  fill: #15803d;
+  stroke: #0f172a;
+  stroke-width: 2px;
+}
+
+.unovaChasmRim {
+  fill: #0284c7;
+  stroke: #38bdf8;
+  stroke-width: 2px;
+}
+
+.unovaChasmIce {
+  fill: #e0f2fe;
+}
+
+.unovaPier {
+  fill: #78350f;
+  stroke: #451a03;
+  stroke-width: 1px;
+}
+
+:global([data-theme="light"]) .unovaPier {
+  fill: #b45309;
+  stroke: #78350f;
+}
+
+.unovaStiltIsland {
+  fill: #0d9488;
+  stroke: #115e59;
+  stroke-width: 1.5px;
+}
+
+/* 2f. Continente Kalos Canónico Estilo Pokémon X / Y */
+.kalosOcean {
+  fill: #112845;
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .kalosOcean {
+  fill: #a5d8ff;
+}
+
+:global([data-theme="amoled"]) .kalosOcean {
+  fill: #091729;
+}
+
+.kalosCoastShallow {
+  fill: none;
+  stroke: rgba(56, 189, 248, 0.45);
+  stroke-width: 18px;
+}
+
+.kalosMainLand {
+  fill: #1b4332;
+  stroke: #2d6a4f;
+  stroke-width: 2.5px;
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .kalosMainLand {
+  fill: #86efac;
+  stroke: #22c55e;
+}
+
+:global([data-theme="amoled"]) .kalosMainLand {
+  fill: #0e271d;
+  stroke: #1b4332;
+}
+
+.kalosBadlands {
+  fill: #9a3412;
+  stroke: #7c2d12;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .kalosBadlands {
+  fill: #fcd34d;
+  stroke: #d97706;
+}
+
+:global([data-theme="amoled"]) .kalosBadlands {
+  fill: #5e1c07;
+  stroke: #431407;
+}
+
+.kalosSnowPeaks {
+  fill: #334155;
+  stroke: #1e293b;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .kalosSnowPeaks {
+  fill: #f1f5f9;
+  stroke: #cbd5e1;
+}
+
+.kalosAutumnForest {
+  fill: #7c2d12;
+  stroke: #431407;
+  stroke-width: 1.5px;
+}
+
+:global([data-theme="light"]) .kalosAutumnForest {
+  fill: #fb923c;
+  stroke: #ea580c;
+}
+
+.kalosPrismPlaza {
+  fill: #1e293b;
+  stroke: #38bdf8;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .kalosPrismPlaza {
+  fill: #e2e8f0;
+  stroke: #0284c7;
+}
+
+.kalosSundialCrystal {
+  fill: #d946ef;
+  stroke: #a21caf;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.65));
+}
+
+/* 2g. Archipiélago de Alola Canónico Estilo Sol y Luna */
+.alolaOcean {
+  fill: #083344;
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .alolaOcean {
+  fill: #7dd3fc;
+}
+
+:global([data-theme="amoled"]) .alolaOcean {
+  fill: #041a24;
+}
+
+.alolaReef {
+  fill: none;
+  stroke: rgba(56, 189, 248, 0.45);
+  stroke-width: 14px;
+}
+
+.alolaIsland {
+  fill: #143624;
+  stroke: #ca8a04;
+  stroke-width: 3px;
+  transition: fill var(--md-motion-duration-short) ease,
+              stroke var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .alolaIsland {
+  fill: #4ade80;
+  stroke: #b45309;
+}
+
+:global([data-theme="amoled"]) .alolaIsland {
+  fill: #0d2317;
+  stroke: #a16207;
+}
+
+.alolaSnowPeak {
+  fill: #334155;
+  stroke: #1e293b;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .alolaSnowPeak {
+  fill: #f8fafc;
+  stroke: #cbd5e1;
+}
+
+.alolaVolcano {
+  fill: #7f1d1d;
+  stroke: #450a0a;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .alolaVolcano {
+  fill: #ef4444;
+  stroke: #b91c1c;
+}
+
+.alolaDesert {
+  fill: #b45309;
+  stroke: #78350f;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .alolaDesert {
+  fill: #fde047;
+  stroke: #ca8a04;
+}
+
+.alolaCanyon {
+  fill: #78350f;
+  stroke: #451a03;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .alolaCanyon {
+  fill: #d97706;
+  stroke: #b45309;
+}
+
+.alolaAetherPlatform {
+  fill: #f8fafc;
+  stroke: #eab308;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+:global([data-theme="light"]) .alolaAetherPlatform {
+  fill: #ffffff;
+  stroke: #ca8a04;
+}
+
+/* 2h. Gran Bretaña e Isla Canónica de Galar (Espada y Escudo) */
+.galarOcean {
+  fill: #0c4a6e;
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .galarOcean {
+  fill: #38bdf8;
+}
+
+:global([data-theme="amoled"]) .galarOcean {
+  fill: #02121e;
+}
+
+.galarCoastShallow {
+  fill: #0284c7;
+  opacity: 0.45;
+}
+
+:global([data-theme="light"]) .galarCoastShallow {
+  fill: #bae6fd;
+  opacity: 0.75;
+}
+
+:global([data-theme="amoled"]) .galarCoastShallow {
+  fill: #034870;
+  opacity: 0.35;
+}
+
+.galarMainLand {
+  fill: #166534;
+  stroke: #14532d;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .galarMainLand {
+  fill: #86efac;
+  stroke: #22c55e;
+}
+
+:global([data-theme="amoled"]) .galarMainLand {
+  fill: #0d3b1e;
+  stroke: #166534;
+}
+
+.galarWildArea {
+  fill: #ca8a04;
+  opacity: 0.35;
+}
+
+:global([data-theme="light"]) .galarWildArea {
+  fill: #fef08a;
+  opacity: 0.85;
+}
+
+.galarWildWater {
+  fill: #0284c7;
+  stroke: #0369a1;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .galarWildWater {
+  fill: #38bdf8;
+  stroke: #0284c7;
+}
+
+.galarSnowPeaks {
+  fill: #f1f5f9;
+  stroke: #cbd5e1;
+  stroke-width: 2px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+:global([data-theme="light"]) .galarSnowPeaks {
+  fill: #ffffff;
+  stroke: #94a3b8;
+}
+
+.galarIndustrialWall {
+  fill: #991b1b;
+  stroke: #7f1d1d;
+  stroke-width: 2.5px;
+}
+
+:global([data-theme="light"]) .galarIndustrialWall {
+  fill: #ef4444;
+  stroke: #b91c1c;
+}
+
+.galarHammerlockeCastle {
+  fill: #334155;
+  stroke: #1e293b;
+  stroke-width: 2.5px;
+}
+
+:global([data-theme="light"]) .galarHammerlockeCastle {
+  fill: #475569;
+  stroke: #0f172a;
+}
+
+.galarMushroomForest {
+  fill: #581c87;
+  stroke: #a855f7;
+  stroke-width: 2px;
+  opacity: 0.85;
+}
+
+:global([data-theme="light"]) .galarMushroomForest {
+  fill: #c084fc;
+  stroke: #7e22ce;
+}
+
+/* 2i. Península Ibérica y Región Canónica de Paldea (Escarlata y Púrpura) */
+.paldeaOcean {
+  fill: #0284c7;
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .paldeaOcean {
+  fill: #38bdf8;
+}
+
+:global([data-theme="amoled"]) .paldeaOcean {
+  fill: #02121e;
+}
+
+.paldeaCoastShallow {
+  fill: #38bdf8;
+  opacity: 0.45;
+}
+
+:global([data-theme="light"]) .paldeaCoastShallow {
+  fill: #bae6fd;
+  opacity: 0.75;
+}
+
+:global([data-theme="amoled"]) .paldeaCoastShallow {
+  fill: #0369a1;
+  opacity: 0.35;
+}
+
+.paldeaMainLand {
+  fill: #15803d;
+  stroke: #14532d;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-medium) ease;
+}
+
+:global([data-theme="light"]) .paldeaMainLand {
+  fill: #86efac;
+  stroke: #22c55e;
+}
+
+:global([data-theme="amoled"]) .paldeaMainLand {
+  fill: #0f3b1e;
+  stroke: #15803d;
+}
+
+.paldeaSnowField {
+  fill: #f0fdf4;
+  stroke: #bae6fd;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 4px 12px rgba(186, 230, 253, 0.4));
+}
+
+:global([data-theme="light"]) .paldeaSnowField {
+  fill: #ffffff;
+  stroke: #7dd3fc;
+}
+
+:global([data-theme="amoled"]) .paldeaSnowField {
+  fill: #e2e8f0;
+  stroke: #38bdf8;
+}
+
+.paldeaCasseroyaLake {
+  fill: #0284c7;
+  stroke: #0369a1;
+  stroke-width: 2.5px;
+}
+
+:global([data-theme="light"]) .paldeaCasseroyaLake {
+  fill: #38bdf8;
+  stroke: #0284c7;
+}
+
+.paldeaAsadoDesert {
+  fill: #d97706;
+  opacity: 0.45;
+}
+
+:global([data-theme="light"]) .paldeaAsadoDesert {
+  fill: #fed7aa;
+  opacity: 0.85;
+}
+
+.paldeaTagtreeForest {
+  fill: #16a34a;
+  stroke: #22c55e;
+  stroke-width: 2px;
+  opacity: 0.6;
+}
+
+:global([data-theme="light"]) .paldeaTagtreeForest {
+  fill: #4ade80;
+  stroke: #16a34a;
+}
+
+.paldeaCraterRim {
+  fill: #78350f;
+  stroke: #92400e;
+  stroke-width: 3px;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
+}
+
+:global([data-theme="light"]) .paldeaCraterRim {
+  fill: #b45309;
+  stroke: #78350f;
+}
+
+.paldeaCraterAbyss {
+  fill: #0f172a;
+  stroke: #06b6d4;
+  stroke-width: 2px;
+}
+
+:global([data-theme="light"]) .paldeaCraterAbyss {
+  fill: #1e293b;
+  stroke: #0284c7;
+}
+
+.paldeaSectorBorder {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 2.2px;
+  stroke-dasharray: 4 6;
+  pointer-events: none;
+}
+
+/* Árboles e ilustraciones vectoriales decorativas */
+.kantoTrees {
+  pointer-events: none;
+}
+
+.landmarkArt {
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Continente e Islas para Otras Regiones */
+.mainLand,
+.islandLand {
+  fill: var(--md-sys-color-surface-container);
+  stroke: var(--md-sys-color-outline-variant);
+  stroke-width: 2.5px;
+}
+
+:global([data-theme="light"]) .mainLand,
+:global([data-theme="light"]) .islandLand {
+  fill: #ffffff;
+  stroke: #c4c6d0;
+}
+
+.inlandWater {
+  fill: #162436;
+}
+
+:global([data-theme="light"]) .inlandWater {
+  fill: #D3E6FA;
+}
+
+/* 3. Carreteras y Rutas Canónicas */
+.roadsLayer {
+  pointer-events: none;
+}
+
+/* Rutas Terrestres Cartográficas: Doble trazo redondeado (#F4E3B2 con borde #B89F65) */
+.routeBorder {
+  fill: none;
+  stroke: #b89f65;
+  stroke-width: 14px;
+}
+
+.routeFill {
+  fill: none;
+  stroke: #f4e3b2;
+  stroke-width: 8px;
+}
+
+:global([data-theme="dark"]) .routeBorder {
+  stroke: #78592a;
+}
+
+:global([data-theme="dark"]) .routeFill {
+  stroke: #d4c392;
+}
+
+:global([data-theme="amoled"]) .routeBorder {
+  stroke: #5c431d;
+}
+
+:global([data-theme="amoled"]) .routeFill {
+  stroke: #b89f65;
+}
+
+/* Rutas marítimas y de surf/buceo (líneas punteadas azules) */
+.routeSteppingBorder,
+.routeMarineBorder {
+  fill: none;
+  stroke: rgba(2, 132, 199, 0.4);
+  stroke-width: 11px;
+  stroke-dasharray: 4 10;
+}
+
+.routeSteppingFill,
+.routeMarineFill {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 6px;
+  stroke-dasharray: 4 10;
+}
+
+:global([data-theme="light"]) .routeMarineFill {
+  stroke: #0284c7;
+}
+
+/* Estructura de Puente (Vía Ciclista, Puente Saeta, etc.) */
+.bridgePiers {
+  stroke: #475569;
+  stroke-width: 3.5px;
+  stroke-linecap: round;
+}
+
+.bridgeDeck {
+  fill: none;
+  stroke: #94a3b8;
+  stroke-width: 14px;
+}
+
+.bridgeRoad {
+  fill: none;
+  stroke: #f1f5f9;
+  stroke-width: 9px;
+}
+
+/* Rutas Terrestres de Hoenn (Amarillo Dorado PokéNav) */
+.hoennLandBorder {
+  fill: none;
+  stroke: #1f2937;
+  stroke-width: 15px;
+}
+
+.hoennLandFill {
+  fill: none;
+  stroke: #facc15;
+  stroke-width: 11px;
+}
+
+/* Rutas Marítimas de Hoenn (Azul Cian Brillante) */
+.hoennMarineBorder {
+  fill: none;
+  stroke: #1e3a8a;
+  stroke-width: 15px;
+}
+
+.hoennMarineFill {
+  fill: none;
+  stroke: #06b6d4;
+  stroke-width: 11px;
+}
+
+:global([data-theme="light"]) .hoennMarineFill {
+  stroke: #22d3ee;
+}
+
+/* Rutas de Sinnoh (Naranja Ámbar Cálido) */
+.sinnohRouteBorder {
+  fill: none;
+  stroke: #1f2937;
+  stroke-width: 15px;
+}
+
+.sinnohRouteFill {
+  fill: none;
+  stroke: #f97316;
+  stroke-width: 11px;
+}
+
+:global([data-theme="light"]) .sinnohRouteFill {
+  stroke: #fb923c;
+}
+
+/* Rutas de Teselia / Unova (Tuberías Ámbar Dorado B2W2) */
+.unovaRouteBorder {
+  fill: none;
+  stroke: #1e293b;
+  stroke-width: 15px;
+}
+
+.unovaRouteFill {
+  fill: none;
+  stroke: #f59e0b;
+  stroke-width: 11px;
+}
+
+:global([data-theme="light"]) .unovaRouteFill {
+  stroke: #fbbf24;
+}
+
+.unovaFerryBorder {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.45);
+  stroke-width: 10px;
+  stroke-dasharray: 4 10;
+}
+
+.unovaFerryFill {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 6px;
+  stroke-dasharray: 4 10;
+}
+
+.unovaMarineTubeBorder {
+  fill: none;
+  stroke: #0369a1;
+  stroke-width: 14px;
+  stroke-dasharray: 8 6;
+}
+
+.unovaMarineTubeFill {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 10px;
+  stroke-dasharray: 8 6;
+}
+
+/* Rutas de Kalos (Tubos Blancos Puros con Borde Oscuro Estilo XY) */
+.kalosRouteBorder {
+  fill: none;
+  stroke: #1e293b;
+  stroke-width: 14px;
+}
+
+.kalosRouteFill {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 9px;
+}
+
+:global([data-theme="dark"]) .kalosRouteFill {
+  stroke: #f8fafc;
+}
+
+/* Rutas de Alola (Carreteras Blancas y Canales Marítimos de Ferry) */
+.alolaRouteBorder {
+  fill: none;
+  stroke: #1e293b;
+  stroke-width: 14px;
+}
+
+.alolaRouteFill {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 9px;
+}
+
+:global([data-theme="dark"]) .alolaRouteFill {
+  stroke: #f8fafc;
+}
+
+.alolaSeaLaneBorder {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.45);
+  stroke-width: 9px;
+  stroke-dasharray: 4 10;
+}
+
+.alolaSeaLaneFill {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 5px;
+  stroke-dasharray: 4 10;
+}
+
+/* Rutas y Vía Férrea Canónica de Galar */
+.galarRouteBorder {
+  fill: none;
+  stroke: #0f172a;
+  stroke-width: 14px;
+}
+
+.galarRouteFill {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 8.5px;
+}
+
+:global([data-theme="dark"]) .galarRouteFill {
+  stroke: #f8fafc;
+}
+
+.galarRailLineBorder {
+  fill: none;
+  stroke: #1e293b;
+  stroke-width: 10px;
+}
+
+.galarRailLineFill {
+  fill: none;
+  stroke: #94a3b8;
+  stroke-width: 5px;
+  stroke-dasharray: 8 8;
+}
+
+:global([data-theme="dark"]) .galarRailLineFill {
+  stroke: #cbd5e1;
+}
+
+/* Rutas Canónicas de Paldea */
+.paldeaRouteBorder {
+  fill: none;
+  stroke: #1e293b;
+  stroke-width: 12px;
+}
+
+.paldeaRouteFill {
+  fill: none;
+  stroke: #fef08a;
+  stroke-width: 7px;
+}
+
+:global([data-theme="dark"]) .paldeaRouteFill {
+  stroke: #fde047;
+}
+
+/* 4. Rosa de los Vientos Cartográfica MD3 */
+.compassGroup {
+  pointer-events: none;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+}
+
+.compassRingOuter {
+  fill: rgba(15, 23, 42, 0.55);
+  stroke: var(--md-sys-color-outline-variant);
+  stroke-width: 1.5px;
+}
+
+:global([data-theme="light"]) .compassRingOuter {
+  fill: rgba(255, 255, 255, 0.88);
+  stroke: var(--md-sys-color-outline);
+}
+
+.compassRingInner {
+  fill: none;
+  stroke: var(--md-sys-color-outline-variant);
+  stroke-width: 0.75px;
+  stroke-dasharray: 2 4;
+}
+
+.compassStarLight {
+  fill: var(--md-sys-color-surface-container-highest);
+}
+
+.compassStarDark {
+  fill: var(--md-sys-color-surface-container);
+}
+
+.compassNorthNeedle {
+  fill: #ef4444;
+}
+
+.compassNorthDark {
+  fill: #b91c1c;
+}
+
+.compassLabel {
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 800;
+  fill: var(--md-sys-color-on-surface);
+  user-select: none;
+}
+
+.compassLabelN {
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 900;
+  fill: #ef4444;
+  user-select: none;
+}
+
+/* 5. Nodos Canónicos de Ciudades y Puntos de Interés */
+.markersLayer {
+  user-select: none;
+}
+
+.markerGroup {
+  cursor: pointer;
+  outline: none;
+  transition: transform var(--md-motion-duration-short) var(--md-motion-easing-emphasized);
+}
+
+.markerGroup:hover {
+  transform: scale(1.18);
+}
+
+.markerSelected {
+  transform: scale(1.15);
+}
+
+.pinShadow {
+  fill: rgba(0, 0, 0, 0.35);
+  filter: blur(2.5px);
+  pointer-events: none;
+}
+
+/* CIUDAD / PUEBLO: Cuadrado Azul Doble Borde □ */
+.cityOuterBox {
+  fill: #3b82f6;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+  transition: fill var(--md-motion-duration-short) ease,
+              stroke var(--md-motion-duration-short) ease;
+}
+
+.cityInnerBox {
+  fill: #ffffff;
+  pointer-events: none;
+}
+
+/* HITO / CUEVA: Círculo Verde Azulado Doble Borde ○ */
+.poiOuterCircle {
+  fill: #0d9488;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+  transition: fill var(--md-motion-duration-short) ease,
+              stroke var(--md-motion-duration-short) ease;
+}
+
+.poiInnerCircle {
+  fill: #ffffff;
+  pointer-events: none;
+}
+
+/* CIUDAD / PUEBLO JOHTO HGSS: Bloque Rojo con Borde Carbón y Punto Verde */
+.johtoCityNode {
+  pointer-events: none;
+}
+
+.johtoCityBox {
+  fill: #e11d48;
+  stroke: #2b2d31;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease,
+              stroke var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .johtoCityBox {
+  fill: #ef4444;
+  stroke: #1f2937;
+}
+
+.johtoCityInnerDot {
+  fill: #4ade80;
+  stroke: #1f2937;
+  stroke-width: 0.75px;
+  pointer-events: none;
+}
+
+/* HITO / POI JOHTO HGSS: Círculo Verde con Borde Carbón y Centro Claro */
+.johtoPoiNode {
+  pointer-events: none;
+}
+
+.johtoParkNode {
+  fill: #34d399;
+  stroke: #2b2d31;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .johtoParkNode {
+  fill: #4ade80;
+  stroke: #1f2937;
+}
+
+.johtoPoiCircle {
+  fill: #34d399;
+  stroke: #2b2d31;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .johtoPoiCircle {
+  fill: #4ade80;
+  stroke: #1f2937;
+}
+
+.johtoPoiInnerDot {
+  fill: #dcfce7;
+  pointer-events: none;
+}
+
+/* CIUDAD / PUEBLO HOENN POKÉNAV: Bloque Rosa con Borde Carbón y Brillo Superior */
+.hoennCityNode,
+.hoennPoiNode {
+  pointer-events: none;
+}
+
+.hoennCityBox {
+  fill: #f43f5e;
+  stroke: #1f2937;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .hoennCityBox {
+  fill: #fb7185;
+  stroke: #111827;
+}
+
+.hoennPoiBox {
+  fill: #22c55e;
+  stroke: #1f2937;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .hoennPoiBox {
+  fill: #4ade80;
+  stroke: #111827;
+}
+
+.hoennGlossShine {
+  fill: #ffffff;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* NODOS SINNOH TOWN MAP (DPPt) */
+.sinnohCityNode,
+.sinnohTownNode,
+.sinnohPoiNode,
+.sinnohLakeMarker {
+  pointer-events: none;
+}
+
+.sinnohCityBox {
+  fill: #ef4444;
+  stroke: #1f2937;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .sinnohCityBox {
+  fill: #dc2626;
+  stroke: #111827;
+}
+
+.sinnohTownCapsule {
+  fill: #6366f1;
+  stroke: #1f2937;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .sinnohTownCapsule {
+  fill: #4f46e5;
+  stroke: #111827;
+}
+
+.sinnohPoiDot {
+  fill: #22c55e;
+  stroke: #1f2937;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+.sinnohPoiInner {
+  fill: #dcfce7;
+  pointer-events: none;
+}
+
+.sinnohLakeNode {
+  fill: #ffffff;
+  stroke: #1f2937;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+/* Nodos de Teselia / Unova (B2W2) */
+.unovaCityNode,
+.unovaPoiNode,
+.unovaEntralinkMarker {
+  pointer-events: none;
+}
+
+.unovaMajorCityDisc {
+  fill: #0284c7;
+  stroke: #f59e0b;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .unovaMajorCityDisc {
+  fill: #0284c7;
+  stroke: #d97706;
+}
+
+.unovaMinorTownDisc {
+  fill: #0284c7;
+  stroke: #f59e0b;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .unovaMinorTownDisc {
+  fill: #0284c7;
+  stroke: #d97706;
+}
+
+.unovaPoiBox {
+  fill: #22c55e;
+  stroke: #f59e0b;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+:global([data-theme="light"]) .unovaPoiBox {
+  fill: #16a34a;
+  stroke: #d97706;
+}
+
+.unovaEntralinkOuter {
+  fill: #0f172a;
+  stroke: #f59e0b;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+}
+
+.unovaGlossShine {
+  fill: #ffffff;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Nodos de Kalos (Rojo: Ciudad | Azul: Pueblo | Amarillo: Lugar Importante) */
+.kalosCityNode,
+.kalosTownNode,
+.kalosLandmarkNode {
+  pointer-events: none;
+}
+
+.kalosCityDisc {
+  fill: #ef4444;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.kalosTownDisc {
+  fill: #3b82f6;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.kalosLandmarkDisc {
+  fill: #f59e0b;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.kalosGlossShine {
+  fill: #ffffff;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Nodos de Alola (Rojo: Ciudad/Pueblo | Verde: Prueba Insular | Púrpura: Ruinas | Dorado: Paraíso Æther) */
+.alolaCityNode,
+.alolaTrialNode,
+.alolaRuinsNode,
+.alolaLandmarkNode,
+.alolaAetherNode {
+  pointer-events: none;
+}
+
+.alolaCityDisc {
+  fill: #ef4444;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.alolaTrialDisc {
+  fill: #10b981;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.alolaRuinsDisc {
+  fill: #8b5cf6;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.alolaLandmarkDisc {
+  fill: #f59e0b;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.alolaAetherDisc {
+  fill: #ffffff;
+  stroke: #eab308;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 2px 8px rgba(234, 179, 8, 0.5));
+}
+
+/* Nodos Canónicos de Galar (Cuadrados Rojos de Gimnasios | Círculos Verdes de Hitos/Minas) */
+.galarCityNode,
+.galarWaypointNode {
+  pointer-events: none;
+}
+
+.galarCitySquare {
+  fill: #ef4444;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 2px 7px rgba(239, 68, 68, 0.5));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.galarCityInnerSquare {
+  fill: #ffffff;
+  opacity: 0.9;
+}
+
+.galarWaypointCircle {
+  fill: #10b981;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 2px 6px rgba(16, 185, 129, 0.5));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.galarWaypointInnerCircle {
+  fill: #ffffff;
+  opacity: 0.85;
+}
+
+/* Nodos Canónicos de Paldea (Gimnasios, Academia, Gran Cráter, Titanes, Team Star, Pueblos) */
+.paldeaGymCityNode,
+.paldeaAcademyNode,
+.paldeaCraterNode,
+.paldeaTitanNode,
+.paldeaTeamStarNode,
+.paldeaTownNode {
+  pointer-events: none;
+}
+
+.paldeaGymCityDisc {
+  fill: #ef4444;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 2px 7px rgba(239, 68, 68, 0.5));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.paldeaAcademyDisc {
+  fill: #7c3aed;
+  stroke: #eab308;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 3px 10px rgba(124, 58, 237, 0.55));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.paldeaCraterJewel {
+  fill: #06b6d4;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.9));
+}
+
+.paldeaTitanDisc {
+  fill: #10b981;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 2px 7px rgba(16, 185, 129, 0.5));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.paldeaStarBadge {
+  fill: #ec4899;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 2px 7px rgba(236, 72, 153, 0.55));
+}
+
+.paldeaTownDisc {
+  fill: #3b82f6;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  filter: drop-shadow(0 2px 6px rgba(59, 130, 246, 0.45));
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+/* Anillo Pulsante Dinámico Material You */
+.pulsingRing {
+  fill: none;
+  animation: poiPulse 1.8s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes poiPulse {
+  0% {
+    r: 14px;
+    opacity: 0.95;
+    stroke-width: 3.5px;
+  }
+  50% {
+    r: 28px;
+    opacity: 0.45;
+    stroke-width: 2px;
+  }
+  100% {
+    r: 40px;
+    opacity: 0;
+    stroke-width: 1px;
+  }
+}
+
+/* Píldora de Etiqueta con Semantic Zoom LOD */
+.labelGroup {
+  pointer-events: none;
+  transition: transform 0.2s ease-out;
+}
+
+.minorLabel {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out;
+}
+
+.minorLabelVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.labelPill {
+  fill: var(--md-sys-color-surface-container-high);
+  stroke: var(--md-sys-color-outline-variant);
+  stroke-width: 1px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+  transition: fill var(--md-motion-duration-short) ease,
+              stroke var(--md-motion-duration-short) ease;
+}
+
+.labelPillActive {
+  fill: var(--md-sys-color-primary);
+  stroke: var(--md-sys-color-primary);
+}
+
+.labelText {
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  fill: var(--md-sys-color-on-surface);
+  user-select: none;
+  transition: fill var(--md-motion-duration-short) ease;
+}
+
+.markerSelected .labelText {
+  fill: var(--md-sys-color-on-primary);
+  font-weight: 700;
+}

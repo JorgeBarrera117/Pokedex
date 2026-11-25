@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const PokedexEntries = ({ species, typeColor }) => {
   const [expanded, setExpanded] = useState(false);
@@ -26,11 +26,32 @@ const PokedexEntries = ({ species, typeColor }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {displayEntries.map((e, i) => (
-        <div key={i} style={{ background: 'rgba(255,255,255,0.05)', borderLeft: `4px solid ${typeColor}`, padding: '12px 16px', borderRadius: '0 12px 12px 0' }}>
-          <div style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', color: typeColor, marginBottom: '6px' }}>
+        <div 
+          key={i} 
+          style={{ 
+            backgroundColor: 'var(--md-sys-color-surface-container-low)', 
+            border: '1px solid var(--md-sys-color-outline-variant)',
+            borderLeft: `4px solid ${typeColor}`, 
+            padding: '12px 16px', 
+            borderRadius: '0 12px 12px 0' 
+          }}
+        >
+          <div style={{ 
+            fontSize: '0.68rem', 
+            fontWeight: 800, 
+            textTransform: 'uppercase', 
+            color: typeColor, 
+            marginBottom: '6px',
+            letterSpacing: '0.04em' 
+          }}>
             Pokémon {e.game}
           </div>
-          <div style={{ fontSize: '0.85rem', fontStyle: 'italic', lineHeight: 1.5, opacity: 0.9 }}>
+          <div style={{ 
+            fontSize: '0.86rem', 
+            fontStyle: 'italic', 
+            lineHeight: 1.5, 
+            color: 'var(--md-sys-color-on-surface)'
+          }}>
             "{e.text}"
           </div>
         </div>
@@ -38,14 +59,22 @@ const PokedexEntries = ({ species, typeColor }) => {
       
       {uniqueEntries.length > 3 && (
         <button 
+          type="button"
           onClick={() => setExpanded(!expanded)}
           style={{
-            background: 'none', border: `1px solid ${typeColor}`, color: typeColor,
-            padding: '8px', borderRadius: '50px', fontWeight: 'bold', cursor: 'pointer',
-            marginTop: '8px'
+            background: 'var(--md-sys-color-surface-container-high)', 
+            border: `1px solid var(--md-sys-color-outline-variant)`, 
+            color: 'var(--md-sys-color-on-surface)',
+            padding: '10px 16px', 
+            borderRadius: '999px', 
+            fontWeight: 700, 
+            fontSize: '0.8rem',
+            cursor: 'pointer',
+            marginTop: '6px',
+            transition: 'background-color var(--md-motion-duration-short) ease'
           }}
         >
-          {expanded ? 'Mostrar Menos' : `Ver todas las entradas (${uniqueEntries.length})`}
+          {expanded ? 'Mostrar menos entradas' : `Ver todas las descripciones (${uniqueEntries.length})`}
         </button>
       )}
     </div>

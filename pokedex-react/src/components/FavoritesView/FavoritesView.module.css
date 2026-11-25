@@ -1,0 +1,473 @@
+/* Material Design 3 Favorites & Side-by-Side Comparison */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn var(--md-motion-duration-short) ease forwards;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-main);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.86rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 4px;
+}
+
+.compareToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: var(--md-shape-corner-full);
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) ease;
+}
+
+.compareToggleBtn:hover {
+  background-color: var(--md-sys-color-surface-container-highest);
+  border-color: var(--md-sys-color-secondary);
+}
+
+.compareActive {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-color: var(--md-sys-color-secondary);
+}
+
+/* Barra de aviso de modo comparación */
+.compareNoticeBar {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  padding: 10px 18px;
+  border-radius: var(--md-shape-corner-medium);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--md-sys-elevation-2);
+}
+
+.noticeText {
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.launchCompareBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: var(--md-shape-corner-full);
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+/* Grilla de Favoritos */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.cardWrapper {
+  position: relative;
+  transition: transform var(--md-motion-duration-short) ease;
+}
+
+.clickableCompare {
+  cursor: pointer;
+}
+
+.selectedForCompare {
+  transform: scale(0.97);
+}
+
+.selectedForCompare > article {
+  border-color: var(--md-sys-color-secondary) !important;
+  box-shadow: 0 0 0 3px rgba(255, 203, 5, 0.4) !important;
+}
+
+.compareCheckbox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+.checkboxChecked {
+  background-color: var(--md-sys-color-secondary);
+  color: #121318;
+  border-color: var(--md-sys-color-secondary);
+}
+
+/* Estado Vacío */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 20px;
+  text-align: center;
+  background-color: var(--md-sys-color-surface-container-low);
+  border: 1px dashed var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-large);
+  gap: 14px;
+}
+
+.emptyIconCircle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-surface-container-high);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--md-sys-color-secondary);
+}
+
+.emptyTitle {
+  font-family: var(--font-main);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.emptyDescription {
+  max-width: 440px;
+  font-size: 0.88rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Modal de Comparación Lado a Lado */
+.dialogScrim {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.compareDialog {
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-extra-large);
+  max-width: 660px;
+  width: 100%;
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow-y: auto;
+  box-shadow: var(--md-sys-elevation-4);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dialogHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.dialogTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerScaleIcon {
+  color: var(--md-sys-color-primary);
+}
+
+.dialogTitle {
+  font-family: var(--font-main);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.dialogCloseBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--md-sys-color-on-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dialogCloseBtn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.loadingCompare {
+  padding: 48px;
+  text-align: center;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-mono);
+}
+
+/* Combatientes Lado a Lado */
+.combatantsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.combatantCard {
+  flex: 1;
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-large);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.compareSprite {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.compareId {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 4px;
+}
+
+.compareName {
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  margin: 2px 0 8px;
+}
+
+.compareTypes {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vsBadge {
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--md-sys-color-primary);
+  background-color: rgba(255, 84, 73, 0.12);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 84, 73, 0.3);
+  flex-shrink: 0;
+}
+
+/* Banner de Totales */
+.totalsBanner {
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-shape-corner-medium);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalsLabel {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--md-sys-color-outline);
+  letter-spacing: 0.08em;
+}
+
+.totalScore {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--md-sys-color-on-surface);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.winningScore {
+  color: var(--md-sys-color-secondary);
+}
+
+/* Lista de Comparación Atributo por Atributo */
+.statsComparisonList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.statCompareRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.valCol {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  width: 32px;
+  text-align: center;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.valWinning {
+  color: #4ade80;
+  font-weight: 900;
+}
+
+.barCompareCenter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statCompareName {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  width: 72px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.barTrackLeft {
+  flex: 1;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.barFillLeft {
+  height: 100%;
+  background-color: var(--md-sys-color-outline);
+  border-radius: 3px;
+}
+
+.barTrackRight {
+  flex: 1;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.barFillRight {
+  height: 100%;
+  background-color: var(--md-sys-color-outline);
+  border-radius: 3px;
+}
+
+.fillWin {
+  background-color: #4ade80;
+}
+
+/* Responsividad */
+@media (max-width: 599px) {
+  .container {
+    padding: 12px 12px 80px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .combatantsRow {
+    gap: 8px;
+  }
+
+  .compareSprite {
+    width: 70px;
+    height: 70px;
+  }
+
+  .compareName {
+    font-size: 0.9rem;
+  }
+
+  .statCompareName {
+    width: 60px;
+    font-size: 0.68rem;
+  }
+
+  .valCol {
+    font-size: 0.78rem;
+    width: 24px;
+  }
+}

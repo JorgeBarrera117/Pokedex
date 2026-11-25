@@ -1,9 +1,16 @@
-import React from 'react';
 import styles from './Sidebar.module.css';
 import { TYPE_TRANSLATIONS } from '../../constants/types';
+import { X, RotateCcw, Filter } from 'lucide-react';
 
-const Sidebar = ({ totalCount, activeType, onClearType, selectedGen, onSelectGen }) => {
-  
+const Sidebar = ({ 
+  totalCount, 
+  activeType, 
+  onClearType, 
+  selectedGen, 
+  onSelectGen,
+  isMobileOpen = false,
+  onCloseMobile
+}) => {
   const generations = [
     { id: 1, label: 'Gen I' },
     { id: 2, label: 'Gen II' },
@@ -16,53 +23,142 @@ const Sidebar = ({ totalCount, activeType, onClearType, selectedGen, onSelectGen
     { id: 9, label: 'Gen IX' }
   ];
 
+  const hasFilters = activeType !== 'all' || selectedGen !== 'all';
+
+  const handleGenClick = (genId) => {
+    onSelectGen(genId);
+  };
+
   return (
-    <aside className={styles.sidebar}>
-      
-      <div className={styles.section}>
-        <div className={styles.title}>Resultados</div>
-        <div>
-          <div className={styles.counter}>{totalCount}</div>
-          <div className={styles.counterSubtitle}>Pokémon encontrados</div>
-        </div>
-      </div>
+    <>
+      {/* Backdrop para móvil */}
+      {isMobileOpen && (
+        <div 
+          className={styles.mobileBackdrop} 
+          onClick={onCloseMobile}
+          aria-hidden="true"
+        />
+      )}
 
-      <div className={styles.section}>
-        <div className={styles.title}>Filtros Activos</div>
-        <div className={styles.activeFilters}>
-          {activeType !== 'all' ? (
-            <div className={styles.filterTag}>
-              Tipo: {TYPE_TRANSLATIONS[activeType] ? TYPE_TRANSLATIONS[activeType].toUpperCase() : activeType.toUpperCase()}
-              <button onClick={onClearType}>×</button>
-            </div>
-          ) : (
-            <span style={{ fontSize: '0.8rem', opacity: 0.5 }}>Ninguno</span>
-          )}
-        </div>
-      </div>
-
-      <div className={styles.section}>
-        <div className={styles.title}>Generaciones</div>
-        <div className={styles.genGrid}>
+      <aside className={`${styles.sidebar} ${isMobileOpen ? styles.mobileOpen : ''}`}>
+        {/* Cabecera exclusiva para móvil */}
+        <div className={styles.mobileHeader}>
+          <div className={styles.mobileHeaderTitle}>
+            <Filter size={18} />
+            <span>Filtros</span>
+          </div>
           <button 
-            className={`${styles.genToggle} ${selectedGen === 'all' ? styles.active : ''}`}
-            onClick={() => onSelectGen('all')}
+            type="button" 
+            className={styles.closeMobileBtn} 
+            onClick={onCloseMobile}
+            aria-label="Cerrar panel de filtros"
           >
-            Todas
+            <X size={20} />
           </button>
-          {generations.map(gen => (
-            <button 
-              key={gen.id}
-              className={`${styles.genToggle} ${selectedGen === gen.id ? styles.active : ''}`}
-              onClick={() => onSelectGen(gen.id)}
-            >
-              {gen.label}
-            </button>
-          ))}
         </div>
-      </div>
 
-    </aside>
+        {/* Sección Resultados */}
+        <div className={styles.section}>
+          <div className={styles.title}>Resultados</div>
+          <div>
+            <div className={styles.counter}>{totalCount}</div>
+            <div className={styles.counterSubtitle}>Pokémon encontrados</div>
+          </div>
+        </div>
+
+        {/* Sección Filtros Activos */}
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <div className={styles.title}>Filtros Activos</div>
+            {hasFilters && (
+              <button
+                type="button"
+                className={styles.resetBtn}
+                onClick={() => {
+                  if (activeType !== 'all') onClearType();
+                  if (selectedGen !== 'all') onSelectGen('all');
+                }}
+                title="Limpiar todos los filtros"
+              >
+                <RotateCcw size={12} />
+                <span>Limpiar</span>
+              </button>
+            )}
+          </div>
+
+          <div className={styles.activeFilters}>
+            {activeType !== 'all' && (
+              <div className={styles.filterTag}>
+                <span>Tipo: {TYPE_TRANSLATIONS[activeType] ? TYPE_TRANSLATIONS[activeType].toUpperCase() : activeType.toUpperCase()}</span>
+                <button 
+                  type="button" 
+                  onClick={onClearType}
+                  aria-label={`Eliminar filtro de tipo ${activeType}`}
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            )}
+
+            {selectedGen !== 'all' && (
+              <div className={styles.filterTag}>
+                <span>Gen: {selectedGen}</span>
+                <button 
+                  type="button" 
+                  onClick={() => onSelectGen('all')}
+                  aria-label={`Eliminar filtro de generación ${selectedGen}`}
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            )}
+
+            {!hasFilters && (
+              <span className={styles.emptyFilterText}>Ninguno</span>
+            )}
+          </div>
+        </div>
+
+        {/* Sección Generaciones */}
+        <div className={styles.section}>
+          <div className={styles.title}>Generaciones</div>
+          <div className={styles.genGrid}>
+            <button 
+              type="button"
+              className={`${styles.genToggle} ${selectedGen === 'all' ? styles.active : ''}`}
+              onClick={() => handleGenClick('all')}
+              aria-pressed={selectedGen === 'all'}
+            >
+              Todas
+            </button>
+            {generations.map(gen => (
+              <button 
+                type="button"
+                key={gen.id}
+                className={`${styles.genToggle} ${selectedGen === gen.id ? styles.active : ''}`}
+                onClick={() => handleGenClick(gen.id)}
+                aria-pressed={selectedGen === gen.id}
+              >
+                {gen.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Botón de cierre en el pie de móvil */}
+        {isMobileOpen && (
+          <div className={styles.mobileFooter}>
+            <button 
+              type="button" 
+              className={styles.applyMobileBtn}
+              onClick={onCloseMobile}
+            >
+              Ver {totalCount} Pokémon
+            </button>
+          </div>
+        )}
+      </aside>
+    </>
   );
 };
 

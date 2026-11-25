@@ -1,8 +1,6 @@
-import React from 'react';
-import { TYPE_COLORS, TYPE_TRANSLATIONS, getTypeIconUrl } from '../../../constants/types';
+import { TYPE_TRANSLATIONS, getTypeIconUrl, getTypeTonal } from '../../../constants/types';
 
 const Weaknesses = ({ weaknesses }) => {
-  // Categorize
   const weak = [];
   const resist = [];
   const immune = [];
@@ -14,31 +12,55 @@ const Weaknesses = ({ weaknesses }) => {
   });
 
   const renderGrid = (items) => (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
-      {items.map(item => (
-        <div 
-          key={item.type} 
-          style={{
-            backgroundColor: TYPE_COLORS[item.type],
-            padding: '4px 8px',
-            borderRadius: '50px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            fontSize: '0.65rem',
-            fontWeight: 'bold',
-            color: 'white',
-            border: item.val >= 4 ? '1px solid white' : 'none',
-            animation: item.val >= 4 ? 'pulse 1s infinite alternate' : 'none'
-          }}
-        >
-          <img src={getTypeIconUrl(item.type)} alt={item.type} style={{ width: '12px', filter: 'brightness(0) invert(1)' }} />
-          {TYPE_TRANSLATIONS[item.type] ? TYPE_TRANSLATIONS[item.type].toUpperCase() : item.type.toUpperCase()}
-          <span style={{ background: 'rgba(0,0,0,0.3)', padding: '2px 4px', borderRadius: '4px', marginLeft: 'auto' }}>
-            ×{item.val}
-          </span>
-        </div>
-      ))}
+    <div style={{ 
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '8px',
+      width: '100%'
+    }}>
+      {items.map(item => {
+        const tonal = getTypeTonal(item.type);
+
+        return (
+          <div 
+            key={item.type} 
+            style={{
+              backgroundColor: tonal.bg,
+              padding: '4px 10px',
+              borderRadius: '8px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              color: tonal.text,
+              border: item.val >= 4 ? '1.5px solid #FFE088' : '1px solid transparent',
+              flexShrink: 0
+            }}
+          >
+            <img 
+              src={getTypeIconUrl(item.type)} 
+              alt="" 
+              style={{ width: '12px', height: '12px', opacity: 0.85, flexShrink: 0 }} 
+            />
+            <span style={{ textTransform: 'uppercase', letterSpacing: '0.02em' }}>
+              {TYPE_TRANSLATIONS[item.type] ? TYPE_TRANSLATIONS[item.type].toUpperCase() : item.type.toUpperCase()}
+            </span>
+            <span style={{ 
+              background: 'rgba(0, 0, 0, 0.25)', 
+              color: tonal.text,
+              padding: '1px 5px', 
+              borderRadius: '4px', 
+              marginLeft: '4px',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 800,
+              fontSize: '0.68rem'
+            }}>
+              ×{item.val}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 
@@ -46,28 +68,28 @@ const Weaknesses = ({ weaknesses }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       {weak.length > 0 && (
         <div>
-          <div style={{ fontSize: '0.7rem', fontWeight: 'bold', marginBottom: '8px', opacity: 0.7 }}>DÉBIL A:</div>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, marginBottom: '8px', color: '#f87171', letterSpacing: '0.5px' }}>
+            DÉBIL A (RECIBE DAÑO AUMENTADO):
+          </div>
           {renderGrid(weak)}
         </div>
       )}
       {resist.length > 0 && (
         <div>
-          <div style={{ fontSize: '0.7rem', fontWeight: 'bold', marginBottom: '8px', opacity: 0.7 }}>RESISTE A:</div>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, marginBottom: '8px', color: '#4ade80', letterSpacing: '0.5px' }}>
+            RESISTENTE A (RECIBE DAÑO REDUCIDO):
+          </div>
           {renderGrid(resist)}
         </div>
       )}
       {immune.length > 0 && (
         <div>
-          <div style={{ fontSize: '0.7rem', fontWeight: 'bold', marginBottom: '8px', opacity: 0.7 }}>INMUNE A:</div>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, marginBottom: '8px', color: '#60a5fa', letterSpacing: '0.5px' }}>
+            INMUNE A (DAÑO NULO):
+          </div>
           {renderGrid(immune)}
         </div>
       )}
-      <style>{`
-        @keyframes pulse {
-          0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
-          100% { box-shadow: 0 0 0 4px rgba(255,255,255,0); }
-        }
-      `}</style>
     </div>
   );
 };

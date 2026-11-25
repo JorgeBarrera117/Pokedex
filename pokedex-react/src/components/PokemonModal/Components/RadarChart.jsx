@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './RadarChart.module.css';
 
 const RadarChart = ({ stats, color }) => {
@@ -11,15 +10,6 @@ const RadarChart = ({ stats, color }) => {
   // pokeData.stats order: 0:hp, 1:attack, 2:defense, 3:sp-atk, 4:sp-def, 5:speed
   // Let's reorder to: HP (top), ATK (top-right), DEF (bottom-right), SPEED (bottom), SP.DEF (bottom-left), SP.ATK (top-left)
   
-  const statMap = {
-    hp: 0,
-    attack: 1,
-    defense: 2,
-    speed: 3,
-    'special-defense': 4,
-    'special-attack': 5
-  };
-
   const orderedStats = [
     stats.find(s => s.stat.name === 'hp').base_stat,
     stats.find(s => s.stat.name === 'attack').base_stat,

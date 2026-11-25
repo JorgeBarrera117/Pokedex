@@ -1,7 +1,6 @@
-import React from 'react';
 import { EGG_GROUPS_TRANSLATIONS, GROWTH_RATE_TRANSLATIONS } from '../../../constants/types';
 
-const Breeding = ({ species, pokeData, typeColor }) => {
+const Breeding = ({ species, pokeData }) => {
   const genderRate = species.gender_rate;
   const femalePct = genderRate === -1 ? null : (genderRate / 8) * 100;
   const malePct = genderRate === -1 ? null : 100 - femalePct;
@@ -17,7 +16,7 @@ const Breeding = ({ species, pokeData, typeColor }) => {
     },
     {
       label: 'CICLOS (PASOS)',
-      value: `${species.hatch_counter} (${hatchSteps.toLocaleString()} pasos)`,
+      value: `${species.hatch_counter} (~${hatchSteps.toLocaleString()} pasos)`,
       bar: false
     },
     {
@@ -25,11 +24,11 @@ const Breeding = ({ species, pokeData, typeColor }) => {
       value: captureRate,
       bar: true,
       pct: (captureRate / 255) * 100,
-      color: captureRate > 200 ? '#22c55e' : captureRate > 100 ? '#eab308' : '#ef4444'
+      color: captureRate > 200 ? '#4ade80' : captureRate > 100 ? '#facc15' : '#f87171'
     },
     {
       label: 'EXP BASE',
-      value: pokeData.base_experience || '?',
+      value: pokeData.base_experience || '—',
       bar: false
     },
     {
@@ -40,16 +39,30 @@ const Breeding = ({ species, pokeData, typeColor }) => {
   ];
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-      
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
       {/* Género Card Especial */}
-      <div style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '12px' }}>
-        <div style={{ fontSize: '0.6rem', fontWeight: 'bold', opacity: 0.6, marginBottom: '8px' }}>RATIO GÉNERO</div>
+      <div style={{ 
+        backgroundColor: 'var(--md-sys-color-surface-container-low)', 
+        border: '1px solid var(--md-sys-color-outline-variant)',
+        padding: '12px', 
+        borderRadius: '12px' 
+      }}>
+        <div style={{ 
+          fontSize: '0.66rem', 
+          fontWeight: 700, 
+          color: 'var(--md-sys-color-on-surface-variant)', 
+          letterSpacing: '0.04em',
+          marginBottom: '6px' 
+        }}>
+          RATIO GÉNERO
+        </div>
         {genderRate === -1 ? (
-          <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Sin Género</div>
+          <div style={{ fontSize: '0.86rem', fontWeight: 700, color: 'var(--md-sys-color-on-surface)' }}>
+            Sin Género
+          </div>
         ) : (
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', fontWeight: 700, marginBottom: '6px' }}>
               <span style={{ color: '#60a5fa' }}>♂ {malePct}%</span>
               <span style={{ color: '#f472b6' }}>♀ {femalePct}%</span>
             </div>
@@ -61,12 +74,42 @@ const Breeding = ({ species, pokeData, typeColor }) => {
       </div>
 
       {cards.map(c => (
-        <div key={c.label} style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '12px' }}>
-          <div style={{ fontSize: '0.6rem', fontWeight: 'bold', opacity: 0.6, marginBottom: '8px' }}>{c.label}</div>
-          <div style={{ fontSize: '0.9rem', fontWeight: 'bold', textTransform: 'capitalize' }}>{c.value}</div>
+        <div 
+          key={c.label} 
+          style={{ 
+            backgroundColor: 'var(--md-sys-color-surface-container-low)', 
+            border: '1px solid var(--md-sys-color-outline-variant)',
+            padding: '12px', 
+            borderRadius: '12px' 
+          }}
+        >
+          <div style={{ 
+            fontSize: '0.66rem', 
+            fontWeight: 700, 
+            color: 'var(--md-sys-color-on-surface-variant)', 
+            letterSpacing: '0.04em',
+            marginBottom: '6px' 
+          }}>
+            {c.label}
+          </div>
+          <div style={{ 
+            fontSize: '0.86rem', 
+            fontWeight: 700, 
+            textTransform: 'capitalize', 
+            color: 'var(--md-sys-color-on-surface)' 
+          }}>
+            {c.value}
+          </div>
           {c.bar && (
-            <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.1)', marginTop: '8px', borderRadius: '2px' }}>
-              <div style={{ width: `${c.pct}%`, height: '100%', background: c.color, borderRadius: '2px' }}></div>
+            <div style={{ 
+              width: '100%', 
+              height: '5px', 
+              backgroundColor: 'var(--md-sys-color-surface-container-highest)', 
+              marginTop: '8px', 
+              borderRadius: '3px',
+              overflow: 'hidden'
+            }}>
+              <div style={{ width: `${c.pct}%`, height: '100%', background: c.color, borderRadius: '3px' }}></div>
             </div>
           )}
         </div>
